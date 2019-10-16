@@ -31,5 +31,8 @@ public interface SampleService {
 
 	void studyBoardDelete(Map<String, Object> map) throws Exception;
 
+	Map<String, Object> studyBoardManageDetail(Map<String, Object> map) throws Exception;
+
+
 
 }

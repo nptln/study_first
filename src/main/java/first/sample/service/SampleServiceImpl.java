@@ -132,4 +132,9 @@ public class SampleServiceImpl implements SampleService {
 		sampleDAO.studyBoarddelete(map);
 	}
 
+	@Override
+	public Map<String, Object> studyBoardManageDetail(Map<String, Object> map) throws Exception {
+		return sampleDAO.studyBoardManageDetail(map);
+	}
+
 }

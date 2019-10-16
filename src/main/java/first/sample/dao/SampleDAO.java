@@ -30,8 +30,8 @@ public class SampleDAO extends AbstractDAO {
 
 	
 	  @SuppressWarnings("unchecked") public Map<String, Object>
-	  selectBoardDetail(Map<String, Object> map) throws Exception { return
-	  (Map<String, Object>) selectOne("sample.selectBoardDetail", map); }
+	  selectBoardDetail(Map<String, Object> map) throws Exception { 
+		  return (Map<String, Object>) selectOne("sample.selectBoardDetail", map); }
 	 
 
 
@@ -86,6 +86,11 @@ public class SampleDAO extends AbstractDAO {
 
 	public void studyBoarddelete(Map<String, Object> map) {
 		delete("sample.studyBoarddelete", map);
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> studyBoardManageDetail(Map<String, Object> map) {
+		 return (Map<String, Object>) selectOne("sample.studyBoardManageDetail", map);
 	}
 
 }

@@ -160,8 +160,7 @@ border-color: rgba(0,0,0,0);
 <c:forEach items="${boardList}" var="boardList">
 <tr>
  <td>${boardList.board_idx}</td>
-<%-- <td id="board_name" style="cursor: pointer;" onclick="MyFunction();" value="${boardList.board_name}">${boardList.board_name}</td> --%>
-<td>${boardList.board_name}</td>
+<td><button id="name" style="cursor:pointer; background-color: rgba(0,0,0,0); color:black; width: 100px;" value="${boardList.board_idx}"/>${boardList.board_name}</td>
 <td>${boardList.board_date}</td> 
 <td>수정</td>
 <td><button id="move" style="cursor:pointer;" value="${boardList.board_idx}"/><input id="button" type="button" value="이동" ></td>
@@ -223,6 +222,13 @@ $(document).ready(function() {
 	         comSubmit.addParam("board_name", board_name);
 	         comSubmit.submit();
 	    }
+	    
+	    if($(this).attr('id') == 'name'){
+	    	  comSubmit.setUrl("<c:url value='/sample/studyBoardManageDetail.do'/>");
+	         comSubmit.addParam("board_idx", test);
+	         comSubmit.addParam("board_name", board_name);
+	         comSubmit.submit();
+	    }
 	});
 
 	 $("#openMask_board_create").on("click", function(e) { 
@@ -267,6 +273,19 @@ function insert_submit(){
 	form.submit();
 	}
 
+function ManageDetail(){
+		 var btn = $(this);
+	    var tr = btn.parent().parent();
+	    var td = tr.children();
+	   
+	    
+	    var board_idx = td.eq(0).text();
+	    var board_name = td.eq(1).text();
+	  
+	    var name = $("#a_name").text();
+	    alert(name);
+		alert("info:"+board_idx+" , "+board_name);
+}
 	
 </script>
 </body>
