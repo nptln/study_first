@@ -49,19 +49,7 @@ margin:10px 10px 0px 0px;
 					<td colspan="3"><input type="text" id="TITLE" name="TITLE"
 						class="wdp_90" value="${map.TITLE }" /></td>
 				</tr>
-				<c:if test="${not empty map.GENDER}">
-			<tr>
-				<th scope="row" >성별</th>
-				<td colspan="3"><input type="radio" name="gender" value="남" checked>남
-							<input type="radio" name="gender" value="여">여</td>
-				</tr>
-				</c:if>
-				<c:if test="${not empty map.COMMENT}">
-				<tr>
-				<th scope="row" >태그</th>
-				<td colspan="3"><input type="text" name="comment" value="${map.COMMENT}"/></td>
-				</tr>
-				</c:if>
+				
 				<tr>
 					<td colspan="4" class="view_text"><textarea rows="20"
 							cols="100" title="내용" id="CONTENTS" name="CONTENTS">${map.CONTENTS }</textarea>
@@ -90,18 +78,21 @@ margin:10px 10px 0px 0px;
 		</table>
 	</form>
 	<button href="#this"  id="addFile">파일 추가</a>
+	<input type="hidden" name="board_name" value="${map.BOARD_NAME}" >
 	<button id="board_idx" style="cursor:pointer;" value="${map.BOARD_IDX}">목록으로</button>
 	<button href="#this"  id="update">저장하기</a>
 	<button href="#this"  id="delete">삭제하기</a>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<script type="text/javascript">
 	var gfv_count = '${fn:length(list)+1}';
+	var board_name = $('input[name=board_name]').val();
 		$(document).ready(function() {
 			$("#board_idx").on("click", function(e) {
 			    var test = $(this).val();
 			    var comSubmit = new ComSubmit();
 			    comSubmit.setUrl("<c:url value='/sample/studyBoardList.do' />");
 		        comSubmit.addParam("board_idx", test);
+		        comSubmit.addParam("board_name", board_name);
 		       comSubmit.submit();
 			});
 			$("#update").on("click", function(e) {
@@ -136,6 +127,8 @@ margin:10px 10px 0px 0px;
 		function fn_updateBoard() {
 			var comSubmit = new ComSubmit("frm");
 			comSubmit.setUrl("<c:url value='/sample/updateBoard.do' />");
+			comSubmit.addParam("board_idx", $("#BOARD_IDX").val());
+			comSubmit.addParam("board_name", board_name);
 			comSubmit.submit();
 		}
 
@@ -144,6 +137,7 @@ margin:10px 10px 0px 0px;
 			comSubmit.setUrl("<c:url value='/sample/deleteBoard.do' />");
 			comSubmit.addParam("IDX", $("#IDX").val());
 			comSubmit.addParam("board_idx", $("#BOARD_IDX").val());
+			comSubmit.addParam("board_name", board_name);
 			comSubmit.submit();
 		}
 		function fn_addFile(){

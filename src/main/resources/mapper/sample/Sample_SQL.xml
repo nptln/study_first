@@ -11,19 +11,23 @@
 
 <select id="sample.openBoardList" resultType="hashmap" parameterType="hashmap" >
    <![CDATA[
-       SELECT
+ SELECT *
+from (
+	SELECT
            IDX,
            TITLE,
            HIT_CNT,
            CREA_DTM,
-           BOARD_IDX,
-           BOARD_NAME
+           TBL.*
        FROM
-           TB_BOARD
-       WHERE
-           DEL_GB= 'N' and board_idx=#{board_idx}
+           TB_BOARD TB
+       RIGHT JOIN TB_BOARDLIST TBL
+       ON TB.board_idx = TBL.board_idx
+        where del_gb = 'n'
+      ) A 
+ where A.board_idx=#{board_idx}
        ORDER BY 
-           IDX DESC
+           IDX desc;
    ]]>
 </select>
 
@@ -36,7 +40,7 @@
 </select>
 
 	<insert id="insertBoardManagement" parameterType="hashmap">
-	<![CDATA[ INSERT INTO TB_BOARDLIST ( board_name, board_date, board_field ) VALUES ( #{board_name}, current_timestamp, #{board_field} ) ]]>
+	<![CDATA[ INSERT INTO TB_BOARDLIST ( board_name, board_date) VALUES ( #{board_name}, current_timestamp) ]]>
 	</insert>
 
 	<select id="sample.selectBoardList" resultType="hashmap" parameterType="hashmap" >
@@ -67,7 +71,7 @@
 
 	<insert id="insertBoard" parameterType="hashmap"
 		useGeneratedKeys="true" keyProperty="IDX">
-	<![CDATA[ INSERT INTO TB_BOARD (BOARD_IDX, BOARD_NAME, TITLE, CONTENTS, HIT_CNT, DEL_GB, CREA_DTM, CREA_ID, GENDER, COMMENT ) VALUES (#{board_idx}, #{board_name}, #{TITLE}, #{CONTENTS}, 0, 'N', current_timestamp, 'Admin', #{gender}, #{comment} ) ]]>
+	<![CDATA[ INSERT INTO TB_BOARD (BOARD_IDX, TITLE, CONTENTS, HIT_CNT, DEL_GB, CREA_DTM, CREA_ID ) VALUES (#{board_idx},  #{TITLE}, #{CONTENTS}, 0, 'N', current_timestamp, 'Admin') ]]>
 	</insert>
 
 	<update id="updateHitCnt" parameterType="hashmap">
@@ -75,11 +79,12 @@
 	</update>
 
 	<select id="selectBoardDetail" parameterType="hashmap"
-		resultType="hashmap"> <![CDATA[ SELECT BOARD_IDX, IDX, HIT_CNT, CREA_ID, CREA_DTM, TITLE, CONTENTS, GENDER, COMMENT FROM TB_BOARD WHERE IDX = #{IDX}]]>
+		resultType="hashmap"> <![CDATA[ SELECT BOARD_NAME, TB.BOARD_IDX, IDX, HIT_CNT, CREA_ID, CREA_DTM, TITLE, CONTENTS FROM TB_BOARD TB, TB_BOARDLIST TBL
+		WHERE IDX = #{IDX} and TB.BOARD_IDX=TBL.BOARD_IDX]]>
 	</select>
 
 	<update id="updateBoard" parameterType="hashmap"> 
-		<![CDATA[ UPDATE TB_BOARD SET TITLE = #{TITLE}, CONTENTS = #{CONTENTS}, GENDER = #{gender}, COMMENT=#{comment} WHERE IDX = #{IDX} ]]>
+		<![CDATA[ UPDATE TB_BOARD SET TITLE = #{TITLE}, CONTENTS = #{CONTENTS} WHERE IDX = #{IDX} ]]>
 	</update>
 
 	<update id="deleteBoard" parameterType="hashmap">
@@ -87,15 +92,15 @@
 	</update>
 
 	<insert id="insertFile" parameterType="hashmap"> 
-		<![CDATA[ INSERT INTO TB_FILE ( BOARD_IDX, ORIGINAL_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CREA_ID ) VALUES ( #{BOARD_IDX}, #{ORIGINAL_FILE_NAME}, #{STORED_FILE_NAME}, #{FILE_SIZE}, 'Admin' ) ]]>
+		<![CDATA[ INSERT INTO TB_FILE (BOARD_IDX, ORIGINAL_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CREA_ID ) VALUES (#{BOARD_IDX}, #{ORIGINAL_FILE_NAME}, #{STORED_FILE_NAME}, #{FILE_SIZE}, 'Admin' ) ]]>
 	</insert>
 
 	<select id="selectFileList" parameterType="hashmap" resultType="hashmap">
-		 <![CDATA[ SELECT IDX, ORIGINAL_FILE_NAME, ROUND(FILE_SIZE/1024,1) AS FILE_SIZE FROM TB_FILE WHERE BOARD_IDX = #{IDX} AND DEL_GB = 'N' ]]>
+		 <![CDATA[ SELECT IDX, ORIGINAL_FILE_NAME, ROUND(FILE_SIZE/1024,1) AS FILE_SIZE FROM TB_FILE WHERE IDX = #{IDX} AND DEL_GB = 'N' ]]>
 	</select>
 
 	<update id="deleteFileList" parameterType="hashmap">
-	<![CDATA[ UPDATE TB_FILE SET DEL_GB = 'Y' WHERE BOARD_IDX = #{IDX} ]]>
+	<![CDATA[ UPDATE TB_FILE SET DEL_GB = 'Y' WHERE IDX = #{IDX} ]]>
 	</update>
 	
 	<update id="updateFile" parameterType="hashmap">

@@ -25,7 +25,7 @@ public class FileUtils {
 		String storedFileName = null;
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		Map<String, Object> listMap = null;
-		String boardIdx = String.valueOf(map.get("IDX"));
+		String boardIdx = String.valueOf(map.get("board_idx"));
 		File file = new File(filePath);
 		if (file.exists() == false) {
 			file.mkdirs();

@@ -115,7 +115,6 @@ public class SampleServiceImpl implements SampleService {
 	@Override
 	public void insertBoardManagement(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		sampleDAO.insertBoardManagement(map);
-
 	}
 
 	@Override

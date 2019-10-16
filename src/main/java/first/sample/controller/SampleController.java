@@ -41,6 +41,7 @@ public class SampleController {
 		ModelAndView mv = new ModelAndView("/sample/study_boardList");
 		List<Map<String, Object>> list = sampleService.openBoardList(commandMap.getMap());
 		mv.addObject("list", list);
+		mv.addObject("map", commandMap.getMap());
 		return mv;
 	}
 	
@@ -115,9 +116,7 @@ public class SampleController {
 	@RequestMapping(value = "/sample/openBoardWrite.do")
 	public ModelAndView openBoardWrite(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("/sample/boardWrite");
-		List<Map<String, Object>> map = sampleService.writeList(commandMap.getMap());
-		mv.addObject("boardList", map);
-		System.out.println(map.get(0));
+		mv.addObject("map", commandMap.getMap());
 		return mv;
 	}
 
@@ -126,6 +125,7 @@ public class SampleController {
 		sampleService.insertBoard(commandMap.getMap(), request);
 		ModelAndView mv = new ModelAndView("/sample/study_boardList");
 		List<Map<String, Object>> list = sampleService.openBoardList(commandMap.getMap());
+		mv.addObject("map", commandMap.getMap());
 		mv.addObject("list", list);
 		return mv;
 	}
@@ -157,6 +157,7 @@ public class SampleController {
 		ModelAndView mv = new ModelAndView("redirect:/sample/openBoardDetail.do");
 		sampleService.updateBoard(commandMap.getMap(), request);
 		mv.addObject("IDX", commandMap.get("IDX"));
+		mv.addObject("map", commandMap.getMap());
 		return mv;
 	}
 
@@ -166,6 +167,7 @@ public class SampleController {
 		ModelAndView mv = new ModelAndView("/sample/study_boardList");
 		List<Map<String, Object>> list = sampleService.openBoardList(commandMap.getMap());
 		mv.addObject("list", list);
+		mv.addObject("map", commandMap.getMap());
 		return mv;
 	}
 

@@ -43,18 +43,6 @@ border: rgba(0,0,0,0);
 				<th scope="row">제목</th>
 				<td colspan="3">${map.TITLE }</td>
 			</tr>
-			<c:if test="${not empty map.GENDER}">
-			<tr>
-				<th scope="row" >성별</th>
-				<td colspan="3">${map.GENDER}</td>
-				</tr>
-				</c:if>
-				<c:if test="${not empty map.COMMENT}">
-				<tr>
-				<th scope="row" >태그</th>
-				<td colspan="3">${map.COMMENT}</td>
-				</tr>
-				</c:if>
 			<tr>
 				<td colspan="4">${map.CONTENTS }</td>
 			</tr>
@@ -76,17 +64,19 @@ border: rgba(0,0,0,0);
 			</tr>
 		</tbody>
 	</table>
+	<input type="hidden" name="board_name" value="${map.BOARD_NAME}" >
 	<button id="board_idx" style="cursor:pointer;" value="${map.BOARD_IDX}">목록으로</button>
 	<button href="#this" id="update">수정하기</button>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<script type="text/javascript">
 		$(document).ready(function() {
-
+			var board_name = $('input[name=board_name]').val();
 			$("#board_idx").on("click", function(e) {
 			    var test = $(this).val();
 			    var comSubmit = new ComSubmit();
 			    comSubmit.setUrl("<c:url value='/sample/studyBoardList.do' />");
 		        comSubmit.addParam("board_idx", test);
+		        comSubmit.addParam("board_name", board_name);
 		       comSubmit.submit();
 			});
 			$("#update").on("click", function(e) {

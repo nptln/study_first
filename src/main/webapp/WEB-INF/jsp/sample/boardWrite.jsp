@@ -33,28 +33,8 @@ margin:10px 10px 0px 0px;
 				</tr>
 				<tr>
 				
-				<c:forEach var="row" items="${boardList}" begin="0" end="0">
-				<input type="hidden" name="board_idx" value="${row.board_idx}" >
-				<input type="hidden" name="board_name" value="${row.board_name}" >
-						<c:if test= "${row.board_field eq 'gender'}">
-						<th scope="row">성별</th>
-							<td><input type="radio" name="gender" value="남" checked>남
-							<input type="radio" name="gender" value="여">여</td>
-						</c:if>
-						<c:if test= "${row.board_field eq 'comment'}">
-							<th scope="row">태그</th>
-							<td><input type="text" name="comment"/></td>
-						</c:if>
-						<c:if test= "${row.board_field eq 'all'}">
-							<th scope="row">성별</th>
-							<td><input type="radio" name="gender" value="남" checked>남
-							<input type="radio" name="gender" value="여">여</td>
-							<tr>
-							<th scope="row">태그</th>
-							<td><input type="text" name="comment"/></td>
-							</tr>
-						</c:if>
-					</c:forEach>
+				<input type="hidden" name="board_idx" value="${map.board_idx}" >
+				<input type="hidden" name="board_name" value="${map.board_name}" >
 			
 				</tr>
 				<tr>
@@ -72,19 +52,18 @@ margin:10px 10px 0px 0px;
 		<br /> <br />
 		<button href="#this"  id="addFile">파일 추가</button>
 		<button href="#this"  id="write">작성하기</button>
-		<c:forEach var="row" items="${boardList}" begin="0" end="0">
-		<button href="#this"  id="list" value="${row.board_idx}">목록으로</button>
-		</c:forEach>
+		<button href="#this"  id="list">목록으로</button>
 	</form>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<script type="text/javascript">
 	var gfv_count = 1;
+	var board_idx = $('input[name=board_idx]').val();
+	var board_name = $('input[name=board_name]').val();
 		$(document).ready(function() {
 			$("#list").on("click", function(e) {
 				//목록으로 버튼 
-				 var test = $(this).val();
 				e.preventDefault();
-				fn_openBoardList(test);
+				fn_openBoardList();
 			});
 			$("#write").on("click", function(e) {
 				//작성하기 버튼 
@@ -104,10 +83,11 @@ margin:10px 10px 0px 0px;
 
 		});
 
-		function fn_openBoardList(test) {
+		function fn_openBoardList() {
 			var comSubmit = new ComSubmit();
 			comSubmit.setUrl("<c:url value='/sample/studyBoardList.do' />");
-			comSubmit.addParam("board_idx", test);
+			comSubmit.addParam("board_idx", board_idx);
+			comSubmit.addParam("board_name", board_name);
 			comSubmit.submit();
 		}
 

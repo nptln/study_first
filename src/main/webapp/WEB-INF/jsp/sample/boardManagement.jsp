@@ -149,13 +149,11 @@ border-color: rgba(0,0,0,0);
 <table>
 <thead>
 <tr style="background-color: black; color:white;">
-<td>번호</td>
+<td>번호(수정)</td>
 <td>게시판 이름</td>
 <td>게시판 생성날짜</td>
 <td>확장필드</td>
 <td>이동</td>
-<td>수정</td>
-<td>삭제</td>
 </tr>
 </thead>
 <tbody>
@@ -163,12 +161,10 @@ border-color: rgba(0,0,0,0);
 <tr>
  <td>${boardList.board_idx}</td>
 <%-- <td id="board_name" style="cursor: pointer;" onclick="MyFunction();" value="${boardList.board_name}">${boardList.board_name}</td> --%>
-<td><input type="text" value="${boardList.board_name}" name="BOARD_NAME${boardList.board_idx}"></td>
+<td>${boardList.board_name}</td>
 <td>${boardList.board_date}</td> 
-<td><input type="text" value="${boardList.board_field}" name="BOARD_FIELD${boardList.board_idx}"></td>
+<td>수정</td>
 <td><button id="move" style="cursor:pointer;" value="${boardList.board_idx}"/><input id="button" type="button" value="이동" ></td>
-<td><button id="update" style="cursor:pointer;" value="${boardList.board_idx}"/><input id="button" type="button" value="수정" ></td>
-<td><button id="delete" style="cursor:pointer;" value="${boardList.board_idx}"/><input id="button" type="button" value="삭제"></td>
 <!-- <td><input type="button" value="수정" style="background-color: black; color: white;" onclick="fn_update();"></td>
 <td><input type="button" value="삭제" style="background-color: black; color: white;" onclick="fn_delete();"></td> -->
 </tr>
@@ -192,19 +188,8 @@ x
 <form action="/sample/boardCreate.do" name="board_create_insert_form" method="POST">
 <table class="contents">
 <tr>
-<th>이름</th>
+<th>게시판 이름</th>
 <td><input type="text" name="board_name" class="board_name" placeholder="게시판 이름"/></td>
-</tr>
-<tr>
-<th>확장필드</th>
-<td>
-<select class="board_select" name="board_field">
-<option value="gender">성별</option>
-<option value="comment">태그</option>
-<option value="all">둘 다</option>
-<option value="n">선택하지 않음</option>
-</select>
-</td>
 </tr>
 </table>
 </form>
@@ -224,27 +209,18 @@ $(document).ready(function() {
 	$("button").click(function() {
 	    var test = $(this).val();
 	    
-	    var board_name = $("input[name=BOARD_NAME"+test+"]").val();
-	    var board_field = $("input[name=BOARD_FIELD"+test+"]").val();
+	    var btn = $(this);
+	    var tr = btn.parent().parent();
+	    var td = tr.children();
+	    
+	    var board_name = td.eq(1).text();
 	    
 	    var comSubmit = new ComSubmit();
-	    if($(this).attr('id') == 'update'){
-	    	comSubmit.setUrl("<c:url value='/sample/studyBoardUpdate.do'/>");
-	         comSubmit.addParam("board_idx", test);
- 	         comSubmit.addParam("board_name", board_name);
-	         comSubmit.addParam("board_field", board_field);
-	         comSubmit.submit();
-	         alert("수정되었습니다.");
-	    }
-	    if($(this).attr('id') == 'delete'){
-	    	comSubmit.setUrl("<c:url value='/sample/studyBoardDelete.do'/>");
-	         comSubmit.addParam("board_idx", test);
-	         comSubmit.submit();
-	         alert("삭제되었습니다.")
-	    }
+
 	    if($(this).attr('id') == 'move'){
 	    	 comSubmit.setUrl("<c:url value='/sample/studyBoardList.do'/>");
 	         comSubmit.addParam("board_idx", test);
+	         comSubmit.addParam("board_name", board_name);
 	         comSubmit.submit();
 	    }
 	});
