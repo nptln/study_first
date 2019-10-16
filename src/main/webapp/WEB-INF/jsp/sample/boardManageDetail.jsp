@@ -31,16 +31,18 @@ border: rgba(0,0,0,0);
 				<th scope="row">게시판 번호</th>
 				<td>${map.board_idx}</td>
 				<th scope="row">게시판 이름</th>
-				<td>${map.board_name}</td>
+				<td><input type="text" name="board_name" value="${map.board_name}"></td>
 			</tr>
 			<tr>
 				<th scope="row">게시판 생성날짜</th>
 				<td>${map.board_date}</td>
 				<th scope="row">확장필드 여부</th>
-				<td colspan="3"><input type="checkbox" value="Y">예<input type="checkbox" value="N">아니오</td>
+				<td colspan="3"><input type="radio" name="board_field_chk" value="Y" onclick="addRow();"/>예<input type="radio" name="board_field_chk" value="N" checked="checked" onclick="removeRowAll();">아니오</td>
 			</tr>
 			<tr>
-				<td colspan="4">테스트영역</td>
+			<td id="table">
+				<div id= "contents" style="display:table;"></div>
+          		</td>
 			</tr>
 		</tbody>
 	</table>
@@ -73,6 +75,27 @@ border: rgba(0,0,0,0);
 			comSubmit.submit();
 		}
 		
+		
+		function removeRowAll() {
+			 $('#contents').remove();
+			 var html = '<div id= "contents" style="display:table;"></div>';
+			 $('#table').append(html);
+		}
+		
+		function addRow(){
+			var html = '<div class="contents_row" style="display:table-row"/><div class="contents_col" style="display:table_cell"/><input type="button" value="추가" onclick="add_div()"><br/><div id="room_type"><input type="text" style="float:left;" name="board_field" class="form-control"/><input type="button" name="del_btn" value="삭제" style="float:left; background:black; color:white;" onclick="remove_div()"></div></div></div>';
+			$('#contents').append(html);
+		}
+		
+		function add_div(){
+			var html = '<div class="contents_row" style="display:table-row"/><div class="contents_col" style="display:table_cell"/><div id="room_type"><input type="text" style="float:left;" name="board_field" class="form-control"/><input type="button" value="삭제" style="float:left; background:black; color:white;" name="del_btn" onclick="remove_div()"></div></div></div>';
+			$('#contents').append(html);
+		}
+
+		function remove_div(obj){
+			var index = $("#contents .contents_row [name=del_btn]").index(obj);
+			$("#contents .contents_row").eq(index).remove();
+		}
 	</script>
 </body>
 </html>
