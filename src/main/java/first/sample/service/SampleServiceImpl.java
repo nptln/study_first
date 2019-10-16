@@ -137,4 +137,24 @@ public class SampleServiceImpl implements SampleService {
 		return sampleDAO.studyBoardManageDetail(map);
 	}
 
+	@Override
+	public void boardFieldUpdate(Map<String, Object> map) throws Exception {
+		sampleDAO.boardFieldUpdate(map);
+	}
+
+	@Override
+	public Map<String, Object> boardFieldSelect(Map<String, Object> map) throws Exception {
+		return sampleDAO.boardFieldSelect(map);
+	}
+
+	@Override
+	public void boardFieldInsert(Map<String, Object> map) throws Exception {
+		sampleDAO.boardFieldInsert(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> boardContentSelect(Map<String, Object> map) throws Exception {
+		return sampleDAO.boardContentSelect(map);
+	}
+
 }

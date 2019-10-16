@@ -21,6 +21,20 @@ import first.sample.service.SampleService;
 public class SampleController {
 	Logger log = Logger.getLogger(this.getClass());
 	
+	@RequestMapping(value= "/sample/BoardFieldUpdate.do")
+	public ModelAndView BoardFieldUpdate(CommandMap commandMap) throws Exception{
+		ModelAndView mv = new ModelAndView("redirect:/sample/boardManagement.do");
+		Map<String, Object> map = sampleService.boardFieldSelect(commandMap.getMap());
+		if(map == null){
+		sampleService.boardFieldInsert(commandMap.getMap());
+		sampleService.studyBoardUpdate(commandMap.getMap());
+		}else{
+		sampleService.boardFieldUpdate(commandMap.getMap());
+		sampleService.studyBoardUpdate(commandMap.getMap());
+		}
+		return mv;
+	}
+	
 	@RequestMapping(value = "/sample/studyBoardManageDetail.do")
 	public ModelAndView studyBoardManageDetail(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("/sample/boardManageDetail");

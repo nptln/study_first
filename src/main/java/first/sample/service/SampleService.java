@@ -33,6 +33,14 @@ public interface SampleService {
 
 	Map<String, Object> studyBoardManageDetail(Map<String, Object> map) throws Exception;
 
+	void boardFieldUpdate(Map<String, Object> map) throws Exception;
+
+	Map<String, Object> boardFieldSelect(Map<String, Object> map) throws Exception;
+
+	void boardFieldInsert(Map<String, Object> map) throws Exception;
+
+	List<Map<String, Object>> boardContentSelect(Map<String, Object> map) throws Exception;
+
 
 
 }

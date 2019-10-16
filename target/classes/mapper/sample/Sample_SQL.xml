@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sample">
 
+<select id="boardContentSelect" parameterType="hashmap" resultType="hashmap">
+<![CDATA[ select * from tb_boardlist tbl left join tb_boardfield tb on tb.board_idx=tbl.board_idx where tbl.board_idx=#{board_idx};]]>
+</select>
+
+<insert id="boardFieldInsert" parameterType="hashmap">
+	<![CDATA[ INSERT INTO TB_BOARDFIELD (board_idx, board_field) VALUES ( #{BOARD_IDX}, #{input1}), ( #{BOARD_IDX}, #{input2}), ( #{BOARD_IDX}, #{input3}) ]]>
+	</insert>
+
+<select id="boardFieldSelect" parameterType="hashmap" resultType="hashmap">
+<![CDATA[ SELECT * FROM TB_BOARDFIELD WHERE BOARD_IDX = #{BOARD_IDX}]]>
+</select>
+
+<update id = "boardFieldUpdate" parameterType="hashmap">
+<![CDATA[ ]]>
+</update>
+
 <select id="studyBoardManageDetail" parameterType="hashmap" resultType="hashmap"> 
 <![CDATA[ SELECT * FROM TB_BOARDLIST WHERE BOARD_IDX = #{board_idx}]]>
 	</select>
@@ -10,7 +26,7 @@
 </delete>
 
 <update id="sample.studyBoardUpdate" parameterType="hashmap"> 
-<![CDATA[ UPDATE TB_BOARDLIST SET BOARD_NAME=#{board_name}, BOARD_FIELD = #{board_field} WHERE BOARD_IDX = #{board_idx} ]]>
+<![CDATA[ UPDATE TB_BOARDLIST SET BOARD_NAME=#{BOARD_NAME}, BOARD_FIELD_CHK=#{BOARD_FIELD_CHK} WHERE BOARD_IDX = #{BOARD_IDX} ]]>
 </update>
 
 <select id="sample.openBoardList" resultType="hashmap" parameterType="hashmap" >

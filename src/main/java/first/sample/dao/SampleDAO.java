@@ -93,4 +93,22 @@ public class SampleDAO extends AbstractDAO {
 		 return (Map<String, Object>) selectOne("sample.studyBoardManageDetail", map);
 	}
 
+	public void boardFieldUpdate(Map<String, Object> map) {
+		update("sample.boardFieldUpdate", map);
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> boardFieldSelect(Map<String, Object> map) {
+		 return (Map<String, Object>) selectOne("sample.boardFieldSelect", map);
+	}
+
+	public void boardFieldInsert(Map<String, Object> map) {
+		insert("sample.boardFieldInsert", map);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> boardContentSelect(Map<String, Object> map) {
+		return (List<Map<String, Object>>) selectList("sample.boardContentSelect", map);
+	}
+
 }
