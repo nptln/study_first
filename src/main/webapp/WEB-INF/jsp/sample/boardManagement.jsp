@@ -149,20 +149,20 @@ border-color: rgba(0,0,0,0);
 <table>
 <thead>
 <tr style="background-color: black; color:white;">
-<td>번호(수정)</td>
 <td>게시판 이름</td>
 <td>게시판 생성날짜</td>
-<td>확장필드</td>
+<td>확장필드 사용여부</td>
 <td>이동</td>
 </tr>
 </thead>
 <tbody>
 <c:forEach items="${boardList}" var="boardList">
 <tr>
- <td>${boardList.board_idx}</td>
+ <input type="hidden" name="board_idx" value="${boardList.board_idx}">
 <td><button id="name" style="cursor:pointer; background-color: rgba(0,0,0,0); color:black; width: 100px;" value="${boardList.board_idx}"/>${boardList.board_name}</td>
 <td>${boardList.board_date}</td> 
-<td>수정</td>
+<td><c:if test="${boardList.board_field_chk eq 'Y'}">사용</c:if>
+	<c:if test="${boardList.board_field_chk eq 'N'}">미사용</c:if></td>
 <td><button id="move" style="cursor:pointer;" value="${boardList.board_idx}"/><input id="button" type="button" value="이동" ></td>
 <!-- <td><input type="button" value="수정" style="background-color: black; color: white;" onclick="fn_update();"></td>
 <td><input type="button" value="삭제" style="background-color: black; color: white;" onclick="fn_delete();"></td> -->

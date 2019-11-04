@@ -2,7 +2,7 @@
 <mapper namespace="sample">
 
 <select id="boardContentSelect" parameterType="hashmap" resultType="hashmap">
-<![CDATA[ select * from tb_boardlist tbl left join tb_boardfield tb on tb.board_idx=tbl.board_idx where tbl.board_idx=#{board_idx};]]>
+ select * from tb_boardlist tbl left join tb_boardfield tb on tb.board_idx=tbl.board_idx where tbl.board_idx=#{board_idx};
 </select>
 
 <insert id="boardFieldInsert" parameterType="hashmap">
@@ -14,7 +14,10 @@
 </select>
 
 <update id = "boardFieldUpdate" parameterType="hashmap">
-<![CDATA[ ]]>
+<![CDATA[ UPDATE TB_BOARDFIELD SET board_field = (case when field_idx = #{field_idx1} then #{input1}
+											 when field_idx = #{field_idx2} then #{input2}
+											 when field_idx = #{field_idx3} then #{input3} end)
+											 where board_idx=#{BOARD_IDX}; ]]>
 </update>
 
 <select id="studyBoardManageDetail" parameterType="hashmap" resultType="hashmap"> 
@@ -22,7 +25,7 @@
 	</select>
 
 <delete id="sample.studyBoarddelete" parameterType="hashmap">
-<![CDATA[ DELETE FROM TB_BOARDLIST WHERE BOARD_IDX = #{board_idx} ]]>
+<![CDATA[ DELETE FROM TB_BOARDLIST WHERE BOARD_IDX = #{BOARD_IDX} ]]>
 </delete>
 
 <update id="sample.studyBoardUpdate" parameterType="hashmap"> 
@@ -106,6 +109,13 @@ from (
 	<update id="updateBoard" parameterType="hashmap"> 
 		<![CDATA[ UPDATE TB_BOARD SET TITLE = #{TITLE}, CONTENTS = #{CONTENTS} WHERE IDX = #{IDX} ]]>
 	</update>
+	
+	<update id="updateField" parameterType="hashmap"> 
+		<![CDATA[ UPDATE TB_FIELDDATA SET FIELD_DATA = (case when field_idx = #{field_idx1} then #{input1}
+											 when field_idx = #{field_idx2} then #{input2}
+											 when field_idx = #{field_idx3} then #{input3} end)
+											  where board_idx=#{board_idx} and idx=#{IDX}]]>
+	</update>
 
 	<update id="deleteBoard" parameterType="hashmap">
 		<![CDATA[ UPDATE TB_BOARD SET DEL_GB = 'Y' WHERE IDX = #{IDX} ]]>
@@ -126,6 +136,10 @@ from (
 	<update id="updateFile" parameterType="hashmap">
 	<![CDATA[ UPDATE TB_FILE SET DEL_GB = 'N' WHERE IDX = #{FILE_IDX} ]]>
 	</update>
+	
+	<select id="selectFieldList" parameterType="hashmap" resultType="hashmap">
+		 <![CDATA[ SELECT IDX, BF.BOARD_IDX, BOARD_FIELD, BF.FIELD_IDX, FIELD_DATA FROM TB_FIELDDATA FD, TB_BOARDFIELD BF WHERE IDX = #{IDX} AND BF.BOARD_IDX = FD.BOARD_IDX and BF.FIELD_IDX=FD.FIELD_IDX; ]]>
+	</select>
 
 
 </mapper>

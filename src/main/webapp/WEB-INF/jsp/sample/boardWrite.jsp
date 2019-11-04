@@ -27,15 +27,26 @@ margin:10px 10px 0px 0px;
 			</colgroup>
 			<caption>게시글 작성</caption>
 			<tbody>
+			<c:choose>
+				<c:when test="${fn:length(field_list) > 0}">
+					<c:forEach var="field_list" items="${field_list}" varStatus="status">
+						<tr>
+							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.board_field}</th>
+								<td colspan="3"><input type="text" name="input${status.count}">
+												<input type="hidden" value="${field_list.field_idx}" name="field_idx${status.count}"></td>
+						</tr>
+					</c:forEach>
+				</c:when>
+			<c:otherwise>		
+			</c:otherwise>
+			</c:choose>
 				<tr>
 					<th scope="row">제목</th>
 					<td><input type="text" id="TITLE" name="TITLE" class="wdp_90"></input></td>
 				</tr>
-				<tr>
-				
+				<tr>			
 				<input type="hidden" name="board_idx" value="${map.board_idx}" >
 				<input type="hidden" name="board_name" value="${map.board_name}" >
-			
 				</tr>
 				<tr>
 					<td colspan="2" class="view_text"><textarea rows="20"

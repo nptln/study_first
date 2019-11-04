@@ -37,6 +37,7 @@ public class SampleDAO extends AbstractDAO {
 
 	public void updateBoard(Map<String, Object> map) throws Exception {
 		update("sample.updateBoard", map);
+		update("sample.updateField", map);
 	}
 
 	public void deleteBoard(Map<String, Object> map) throws Exception {
@@ -98,8 +99,8 @@ public class SampleDAO extends AbstractDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> boardFieldSelect(Map<String, Object> map) {
-		 return (Map<String, Object>) selectOne("sample.boardFieldSelect", map);
+	public List<Map<String, Object>> boardFieldSelect(Map<String, Object> map) {
+		 return (List<Map<String, Object>>) selectList("sample.boardFieldSelect", map);
 	}
 
 	public void boardFieldInsert(Map<String, Object> map) {
@@ -109,6 +110,11 @@ public class SampleDAO extends AbstractDAO {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> boardContentSelect(Map<String, Object> map) {
 		return (List<Map<String, Object>>) selectList("sample.boardContentSelect", map);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectFieldList(Map<String, Object> map) {
+		return (List<Map<String, Object>>) selectList("sample.selectFieldList", map);
 	}
 
 }

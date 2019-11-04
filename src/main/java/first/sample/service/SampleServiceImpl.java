@@ -66,9 +66,11 @@ public class SampleServiceImpl implements SampleService {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Map<String, Object> tempMap = sampleDAO.selectBoardDetail(map);
 		resultMap.put("map", tempMap);
-
 		List<Map<String, Object>> list = sampleDAO.selectFileList(map);
 		resultMap.put("list", list);
+		//확장필드 리스트
+		List<Map<String, Object>> field_list = sampleDAO.selectFieldList(map);
+		resultMap.put("field_list", field_list);
 		return resultMap;
 
 	}
@@ -143,8 +145,8 @@ public class SampleServiceImpl implements SampleService {
 	}
 
 	@Override
-	public Map<String, Object> boardFieldSelect(Map<String, Object> map) throws Exception {
-		return sampleDAO.boardFieldSelect(map);
+	public List<Map<String, Object>> boardFieldSelect(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>)sampleDAO.boardFieldSelect(map);
 	}
 
 	@Override
