@@ -24,9 +24,9 @@ public class SampleController {
 	@RequestMapping(value= "/sample/BoardFieldUpdate.do")
 	public ModelAndView BoardFieldUpdate(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/sample/boardManagement.do");
-		System.out.println(commandMap.getMap());
+		System.out.println("수정하기 클릭시:"+commandMap.getMap());
 		List<Map<String, Object>> list = (List<Map<String, Object>>) sampleService.boardFieldSelect(commandMap.getMap());
-		if(list == null){
+		if(list == null || list.size() == 0 ){
 		sampleService.boardFieldInsert(commandMap.getMap());
 		sampleService.studyBoardUpdate(commandMap.getMap());
 		}else{
