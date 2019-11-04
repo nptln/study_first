@@ -150,7 +150,7 @@ public class SampleController {
 	@RequestMapping(value = "/sample/insertBoard.do")
 	public ModelAndView insertBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		sampleService.insertBoard(commandMap.getMap(), request);
-		System.out.println(commandMap.getMap());
+		System.out.println("글등록시:"+commandMap.getMap());
 		ModelAndView mv = new ModelAndView("/sample/study_boardList");
 		List<Map<String, Object>> list = sampleService.openBoardList(commandMap.getMap());
 		mv.addObject("map", commandMap.getMap());

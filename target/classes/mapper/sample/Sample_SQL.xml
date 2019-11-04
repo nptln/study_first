@@ -96,6 +96,10 @@ from (
 		useGeneratedKeys="true" keyProperty="IDX">
 	<![CDATA[ INSERT INTO TB_BOARD (BOARD_IDX, TITLE, CONTENTS, HIT_CNT, DEL_GB, CREA_DTM, CREA_ID ) VALUES (#{board_idx},  #{TITLE}, #{CONTENTS}, 0, 'N', current_timestamp, 'Admin') ]]>
 	</insert>
+	
+	<insert id="insertField" parameterType="hashmap">
+	 insert into tb_fielddata (idx, field_data, board_idx, field_idx) values ( #{IDX}, #{input1}, #{board_idx}, #{field_idx1}), (#{IDX}, #{input2}, #{board_idx}, #{field_idx2}), (#{IDX}, #{input3}, #{board_idx}, #{field_idx3})
+	</insert>
 
 	<update id="updateHitCnt" parameterType="hashmap">
 	<![CDATA[ UPDATE TB_BOARD SET HIT_CNT = IFNULL(HIT_CNT, 0) + 1 WHERE IDX = #{IDX} ]]>
