@@ -60,9 +60,12 @@ button {
 						<div id="contents" style="display: table;">
 							<td>
 								<c:forEach var="field" items="${list}" varStatus="status">
+							<c:if test="${field.board_field ne null}">
 									<input type="hidden" value="${field.field_idx}" name="field_idx${status.count}">
 									<input type="text" value="${field.board_field}" name="input${status.count}"><br/>
-								</c:forEach></td>
+								</c:if>
+								</c:forEach>
+								</td>
 						</div>
 					</tr>
 				</c:if>
@@ -102,6 +105,7 @@ button {
 									e.preventDefault();
 									fn_openBoardDelete();}
 							});
+							
 						});
 
 		function fn_openBoardUpdate() {
@@ -130,10 +134,11 @@ button {
 			$('#attach').remove();
 			var html = '<div id="attach"></div>';
 			$('#room_type').append(html);
+			$('#field_input').show();
 		}
 
 		function addRow() {
-			var html = '<div class="contents_row" style="display:table-row"/><div class="contents_col" style="display:table_cell"/><select id="count"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><input type="button" value="추가" style="background-color:black; color:white;" onclick="createInput()"><input type="button" name="del_btn" value="삭제" style="background:black; color:white;" onclick="removeRow()"><br/><div id="room_type"><div id="attach"></div></div></div></div>';
+			var html = '<div class="contents_row" style="display:table-row"><div class="contents_col" style="display:table_cell"><select id="count"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><input type="button" value="추가" id="field_input" style="background-color:black; color:white;" onclick="createInput()"><input type="button" name="del_btn" value="삭제" style="background:black; color:white;" onclick="removeRow()"><br/><div id="room_type"><div id="attach"></div></div></div></div>';
 			$('#contents').append(html);
 		}
 
@@ -151,6 +156,8 @@ button {
 					resultSpan.appendChild(brTag);
 				}
 			}
+			
+			$('#field_input').hide();
 		}
 	</script>
 </body>
