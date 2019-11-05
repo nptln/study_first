@@ -112,6 +112,11 @@ public class SampleDAO extends AbstractDAO {
 	public List<Map<String, Object>> boardContentSelect(Map<String, Object> map) {
 		return (List<Map<String, Object>>) selectList("sample.boardContentSelect", map);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> boardContentField(Map<String, Object> map) {
+		return (List<Map<String, Object>>) selectList("sample.boardContentField", map);
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectFieldList(Map<String, Object> map) {
@@ -120,7 +125,7 @@ public class SampleDAO extends AbstractDAO {
 
 	public void fieldDelete(Map<String, Object> map) {
 		delete("sample.fieldDelete", map);
-		update("sample.fieldChkUpdate", map);
+		update("sample.fieldChkUpdate", map);	
 	}
 
 }

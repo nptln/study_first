@@ -5,6 +5,10 @@
  select * from tb_boardlist tbl left join tb_boardfield tb on tb.board_idx=tbl.board_idx where tbl.board_idx=#{board_idx};
 </select>
 
+<select id="boardContentField" parameterType="hashmap" resultType="hashmap">
+ select * from tb_boardlist tbl left join tb_boardfield tb on tb.board_idx=tbl.board_idx where tbl.board_idx=#{board_idx} and board_field is not null;
+</select>
+
 <delete id="sample.fieldDelete" parameterType="hashmap">
  delete from tb_boardfield where board_idx=#{board_idx};
 </delete>

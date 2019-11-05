@@ -43,6 +43,8 @@ public interface SampleService {
 
 	void fieldDelete(Map<String, Object> map) throws Exception;
 
+	List<Map<String, Object>> boardContentField(Map<String, Object> map) throws Exception;
+
 
 
 }

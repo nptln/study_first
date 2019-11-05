@@ -158,6 +158,11 @@ public class SampleServiceImpl implements SampleService {
 	public List<Map<String, Object>> boardContentSelect(Map<String, Object> map) throws Exception {
 		return sampleDAO.boardContentSelect(map);
 	}
+	
+	@Override
+	public List<Map<String, Object>> boardContentField(Map<String, Object> map) throws Exception {
+		return sampleDAO.boardContentField(map);
+	}
 
 	@Override
 	public void fieldDelete(Map<String, Object> map) throws Exception {

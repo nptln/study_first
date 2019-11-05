@@ -32,7 +32,8 @@ margin:10px 10px 0px 0px;
 						<tr>
 							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.board_field}</th>
 								<td colspan="3"><input type="text" name="input${status.count}">
-												<input type="hidden" value="${field_list.field_idx}" name="field_idx${status.count}"></td>
+												<input type="hidden" value="${field_list.field_idx}" name="field_idx${status.count}">
+												</td>
 						</tr>
 				</c:if>
 					</c:forEach>
