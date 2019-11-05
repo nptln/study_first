@@ -39,10 +39,11 @@ button {
 					<th scope="row">게시판 생성날짜</th>
 					<td>${map.board_date}</td>
 					<th scope="row">확장필드 여부</th>
-					<td colspan="3"><input type="radio" name="BOARD_FIELD_CHK"
+					<td colspan="3">
+						<input type="radio" name="BOARD_FIELD_CHK"
 						value="Y" onclick="addRow();"
-						${map.board_field_chk eq 'Y' ? 'checked' : ''} />예<input
-						type="radio" name="BOARD_FIELD_CHK" value="N"
+						${map.board_field_chk eq 'Y' ? 'checked' : ''} />예
+						<input type="radio" name="BOARD_FIELD_CHK" value="N"
 						onclick="removeRowAll();"
 						${empty map.board_field_chk || map.board_field_chk eq 'N' ? 'checked' : ''}>아니오</td>
 				</tr>
@@ -57,16 +58,19 @@ button {
 				<c:if test="${map.board_field_chk eq 'Y'}">
 					<tr>
 					<th scope="row">확장필드</th>
-						<div id="contents" style="display: table;">
-							<td>
+							<td id="table">
 								<c:forEach var="field" items="${list}" varStatus="status">
-							<c:if test="${field.board_field ne null}">
 									<input type="hidden" value="${field.field_idx}" name="field_idx${status.count}">
-									<input type="text" value="${field.board_field}" name="input${status.count}"><br/>
-								</c:if>
 								</c:forEach>
-								</td>
+						<div id="contents" style="display: table;">
+						<c:forEach var="field2" items="${list}" varStatus="status">
+						<c:if test="${field2.board_field ne null}">
+									<input type="text" value="${field2.board_field}" name="input${status.count}"><br/>
+									</c:if>
+									</c:forEach>
 						</div>
+								
+								</td>
 					</tr>
 				</c:if>
 			</tbody>
@@ -114,6 +118,7 @@ button {
 			comSubmit.setUrl("<c:url value='/sample/BoardFieldUpdate.do' />");
 			comSubmit.addParam("BOARD_IDX", board_idx);
 			comSubmit.submit();
+			alert("수정되었습니다.");
 		}
 		
 		function fn_openBoardDelete() {
@@ -125,10 +130,19 @@ button {
 		}
 
 		function removeRowAll() {
-			$('#contents').remove();
-			var html = '<div id= "contents" style="display:table;"></div>';
-			$('#table').append(html);
-		}
+				var chk = confirm("확장필드를 삭제하시겠습니까?");
+				if(chk){
+					$('#contents').remove();
+					var html = '<div id= "contents" style="display:table;"></div>';
+					$('#table').append(html);
+					var board_idx = "${map.board_idx}";
+					var comSubmit = new ComSubmit("frm");
+					comSubmit.setUrl("<c:url value='/sample/fieldDelete.do' />");
+					comSubmit.addParam("board_idx", board_idx);
+					comSubmit.submit();
+					}
+			}
+		
 
 		function removeRow() {
 			$('#attach').remove();

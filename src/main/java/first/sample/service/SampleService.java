@@ -41,6 +41,8 @@ public interface SampleService {
 
 	List<Map<String, Object>> boardContentSelect(Map<String, Object> map) throws Exception;
 
+	void fieldDelete(Map<String, Object> map) throws Exception;
+
 
 
 }

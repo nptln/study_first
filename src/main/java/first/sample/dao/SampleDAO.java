@@ -118,4 +118,9 @@ public class SampleDAO extends AbstractDAO {
 		return (List<Map<String, Object>>) selectList("sample.selectFieldList", map);
 	}
 
+	public void fieldDelete(Map<String, Object> map) {
+		delete("sample.fieldDelete", map);
+		update("sample.fieldChkUpdate", map);
+	}
+
 }

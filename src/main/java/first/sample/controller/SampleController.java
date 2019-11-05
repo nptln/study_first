@@ -60,6 +60,18 @@ public class SampleController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "/sample/fieldDelete.do")
+	public ModelAndView fieldDelete(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("/sample/boardManageDetail");
+		sampleService.fieldDelete(commandMap.getMap());
+		Map<String, Object> map = sampleService.studyBoardManageDetail(commandMap.getMap());
+		List<Map<String, Object>> list= sampleService.boardContentSelect(commandMap.getMap());
+		mv.addObject("map", map);
+		mv.addObject("list", list);
+		return mv;
+	}
+	
+	
 	@RequestMapping(value = "/sample/studyBoardList.do")
 	public ModelAndView studyBoardList(CommandMap commandMap) throws Exception {
 		// jsonView : action-servlet.xml에 bean id='jsonView'사용. 데이터를 json형식으로 변환해주는 역할 수행

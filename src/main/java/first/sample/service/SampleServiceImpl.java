@@ -159,4 +159,9 @@ public class SampleServiceImpl implements SampleService {
 		return sampleDAO.boardContentSelect(map);
 	}
 
+	@Override
+	public void fieldDelete(Map<String, Object> map) throws Exception {
+		sampleDAO.fieldDelete(map);
+	}
+
 }
