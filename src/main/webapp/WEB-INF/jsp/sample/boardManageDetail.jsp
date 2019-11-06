@@ -57,26 +57,33 @@ button {
 				<c:if test="${map.board_field_chk eq 'Y'}">
 					<tr>
 						<th scope="row">확장필드</th>
-						<td id="table"><c:forEach var="field" items="${list}"
+						<td id="table">
+							<c:forEach var="field" items="${list}"
 								varStatus="status">
 								<input type="hidden" value="${field.field_idx}"
 									name="field_idx${status.count}">
 							</c:forEach>
 							<div id="contents" style="display: table;">
 								<c:if test="${fn:length(field_list)==2}">
-									<select id="count">
+									<select id="count2">
 										<option value="1">1</option>
 									</select>
+										<input type="button" value="추가" id="field_input"
+									style="background-color: black; color: white;"
+									onclick="createInput()">
+									<input type="button" name="del_btn" value="삭제" style="background:black; color:white;" onclick="removeRow()"><br />
 								</c:if>
 								<c:if test="${fn:length(field_list)==1}">
-									<select id="count">
+									<select id="count3">
 										<option value="1">1</option>
 										<option value="2">2</option>
 									</select>
-								</c:if>
-								<input type="button" value="추가"
+										<input type="button" value="추가" id="field_input"
 									style="background-color: black; color: white;"
-									onclick="createInput()"><br />
+									onclick="createInput()">
+									<input type="button" name="del_btn" value="삭제" style="background:black; color:white;" onclick="removeRow()"><br />
+								</c:if>
+						
 								<c:forEach var="field2" items="${list}" varStatus="status">
 									<c:if test="${field2.board_field ne null}">
 										<input type="text" value="${field2.board_field}"
@@ -174,6 +181,8 @@ button {
 
 		function createInput() {
 			var count = $("#count option:selected").val();
+			var count2 = $("#count2 option:selected").val();
+			var count3 = $("#count3 option:selected").val();
 			var resultSpan = document.getElementById("attach");
 			// 수정해야 할 경우 index 값으로 접근해보기..
 			if ($("#count").length) {
@@ -187,13 +196,28 @@ button {
 						resultSpan.appendChild(brTag);
 					}
 				}
-			} else {
-				var inputTag = document.createElement("INPUT");
-				var brTag = document.createElement("BR");
-				inputTag.type = "text";
-				inputTag.name = "input" + "4";
-				resultSpan.appendChild(inputTag);
-				resultSpan.appendChild(brTag);
+			}
+			if ($("#count2").length) {
+				if (!isNaN(count2)) {
+						var inputTag = document.createElement("INPUT");
+						var brTag = document.createElement("BR");
+						inputTag.type = "text";
+						inputTag.name = "input" + '3';
+						resultSpan.appendChild(inputTag);
+						resultSpan.appendChild(brTag);
+				}
+			}
+			if ($("#count3").length) {
+				if (!isNaN(count3)) {
+					for (var i = 1; i <= count3; i++) {
+						var inputTag = document.createElement("INPUT");
+						var brTag = document.createElement("BR");
+						inputTag.type = "text";
+						inputTag.name = "input" + (i+1);
+						resultSpan.appendChild(inputTag);
+						resultSpan.appendChild(brTag);
+					}
+				}
 			}
 
 			$('#field_input').hide();
