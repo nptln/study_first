@@ -70,8 +70,8 @@ button {
 									</select>
 										<input type="button" value="추가" id="field_input"
 									style="background-color: black; color: white;"
-									onclick="createInput()">
-									<input type="button" name="del_btn" value="삭제" style="background:black; color:white;" onclick="removeRow()"><br />
+									onclick="createInput()"><br/>
+								
 								</c:if>
 								<c:if test="${fn:length(field_list)==1}">
 									<select id="count3">
@@ -80,18 +80,20 @@ button {
 									</select>
 										<input type="button" value="추가" id="field_input"
 									style="background-color: black; color: white;"
-									onclick="createInput()">
-									<input type="button" name="del_btn" value="삭제" style="background:black; color:white;" onclick="removeRow()"><br />
+									onclick="createInput()"><br/>
+	
 								</c:if>
 						
 								<c:forEach var="field2" items="${list}" varStatus="status">
 									<c:if test="${field2.board_field ne null}">
 										<input type="text" value="${field2.board_field}"
 											name="input${status.count}">
-										<br />
+										<br/>
 									</c:if>
 								</c:forEach>
+								<div id="room_type">
 								<div id="attach"></div>
+								</div>
 							</div></td>
 					</tr>
 				</c:if>
@@ -168,6 +170,11 @@ button {
 		}
 
 		function removeRow() {
+			var elem = document.getElementById("field_input");
+			elem.value="추가";
+			$("#field_input").removeAttr("onclick");
+			$("#field_input").attr("onclick", "createInput();");
+			
 			$('#attach').remove();
 			var html = '<div id="attach"></div>';
 			$('#room_type').append(html);
@@ -175,11 +182,16 @@ button {
 		}
 
 		function addRow() {
-			var html = '<div class="contents_row" style="display:table-row"><div class="contents_col" style="display:table_cell"><select id="count"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><input type="button" value="추가" id="field_input" style="background-color:black; color:white;" onclick="createInput()"><input type="button" name="del_btn" value="삭제" style="background:black; color:white;" onclick="removeRow()"><br/><div id="room_type"><div id="attach"></div></div></div></div>';
+			var html = '<div class="contents_row" style="display:table-row"><div class="contents_col" style="display:table_cell"><select id="count"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><input type="button" value="추가" id="field_input" style="background-color:black; color:white;" onclick="createInput()"><br/><div id="room_type"><div id="attach"></div></div></div></div>';
 			$('#contents').append(html);
 		}
 
 		function createInput() {
+			var elem = document.getElementById("field_input");
+			elem.value="삭제";
+			$("#field_input").removeAttr("onclick");
+			$("#field_input").attr("onclick", "removeRow();");
+			
 			var count = $("#count option:selected").val();
 			var count2 = $("#count2 option:selected").val();
 			var count3 = $("#count3 option:selected").val();
@@ -220,7 +232,7 @@ button {
 				}
 			}
 
-			$('#field_input').hide();
+			/* $('#field_input').hide(); */
 		}
 	</script>
 </body>
