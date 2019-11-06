@@ -58,7 +58,8 @@ button {
 					<tr>
 						<th scope="row">확장필드</th>
 						<td id="table">
-							<c:forEach var="field" items="${list}"
+							<button type="button" id="field_insert" onclick="pf_field_insert();">추가</button>
+							<!--<c:forEach var="field" items="${list}"
 								varStatus="status">
 								<input type="hidden" value="${field.field_idx}"
 									name="field_idx${status.count}">
@@ -96,7 +97,9 @@ button {
 								<div id="room_type">
 								<div id="attach"></div>
 								</div>
-							</div></td>
+							</div>-->
+							
+							</td>
 					</tr>
 				</c:if>
 			</tbody>
@@ -169,6 +172,22 @@ button {
 				comSubmit.addParam("board_idx", board_idx);
 				comSubmit.submit();
 			}
+		}
+		
+		function pf_field_insert(){
+			var length = $("#table").find(".field_text").length;
+			var html = '<div class="field_div'+length+'"><input type="hidden" name="field_key"><input type="text" class="field_text" name="field_data"> <button type="button" onclick="pf_field_delete(this);">삭제</button></div>';
+				
+			$("#table").append(html);
+			
+		}
+		
+		function pf_field_delete(obj){
+			var target = $(obj).closet('div');
+			
+			//var target = $(obj).data("target");
+			
+			$("#table").find(target).remove();
 		}
 
 		function removeRow() {

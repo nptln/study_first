@@ -1,5 +1,7 @@
 package first.sample.controller;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -22,16 +24,27 @@ public class SampleController {
 	Logger log = Logger.getLogger(this.getClass());
 	
 	@RequestMapping(value= "/sample/BoardFieldUpdate.do")
-	public ModelAndView BoardFieldUpdate(CommandMap commandMap) throws Exception{
+	public ModelAndView BoardFieldUpdate(CommandMap commandMap, HttpServletRequest req) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/sample/boardManagement.do");
-		System.out.println("수정하기 클릭시:"+commandMap.getMap());
-		List<Map<String, Object>> list = (List<Map<String, Object>>) sampleService.boardFieldSelect(commandMap.getMap());
-		if(list == null || list.size() == 0 ){
-		sampleService.boardFieldInsert(commandMap.getMap());
+		
+		String[] field_key = req.getParameterValues("field_key");
+		String[] field_data = req.getParameterValues("field_data");
+		
+		System.out.println("field_key" + Arrays.toString(field_key));
+		System.out.println("field_data" + Arrays.toString(field_data));
+
 		sampleService.studyBoardUpdate(commandMap.getMap());
-		}else{
-		sampleService.boardFieldUpdate(commandMap.getMap());
-		sampleService.studyBoardUpdate(commandMap.getMap());
+		
+		for(int i = 0; i< field_key.length; i++){
+			HashMap<String,Object> map = new HashMap<String, Object>();
+			map.put("BOARD_IDX", commandMap.getMap().get("BOARD_IDX"));
+			map.put("field_data", field_data[i]);
+			if(field_key[i].equals("")){
+				sampleService.boardFieldInsert(map);
+			}else {
+				map.put("field_key", field_key[i]);
+				sampleService.boardFieldUpdate(map);
+			}
 		}
 		return mv;
 	}

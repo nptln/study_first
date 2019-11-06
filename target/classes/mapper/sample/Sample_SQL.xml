@@ -18,7 +18,10 @@ UPDATE TB_BOARDLIST SET BOARD_FIELD_CHK='N' WHERE BOARD_IDX = #{board_idx};
 </update>
 
 <insert id="boardFieldInsert" parameterType="hashmap">
-	<![CDATA[ INSERT INTO TB_BOARDFIELD (board_idx, board_field) VALUES ( #{BOARD_IDX}, #{input1}), ( #{BOARD_IDX}, #{input2}), ( #{BOARD_IDX}, #{input3}) ]]>
+	<![CDATA[ INSERT INTO TB_BOARDFIELD 
+	(board_idx, board_field) 
+	VALUES 
+	( #{BOARD_IDX}, #{field_data})]]>
 	</insert>
 
 <select id="boardFieldSelect" parameterType="hashmap" resultType="hashmap">
@@ -26,10 +29,8 @@ UPDATE TB_BOARDLIST SET BOARD_FIELD_CHK='N' WHERE BOARD_IDX = #{board_idx};
 </select>
 
 <update id = "boardFieldUpdate" parameterType="hashmap">
-<![CDATA[ UPDATE TB_BOARDFIELD SET board_field = (case when field_idx = #{field_idx1} then #{input1}
-											 when field_idx = #{field_idx2} then #{input2}
-											 when field_idx = #{field_idx3} then #{input3} end)
-											 where board_idx=#{BOARD_IDX}; ]]>
+<![CDATA[ UPDATE TB_BOARDFIELD SET board_field = #{field_data}
+		 where field_idx=#{field_key}; ]]>
 </update>
 
 
