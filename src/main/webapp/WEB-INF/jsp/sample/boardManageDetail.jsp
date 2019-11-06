@@ -64,6 +64,7 @@ button {
 									name="field_idx${status.count}">
 							</c:forEach>
 							<div id="contents" style="display: table;">
+								
 								<c:if test="${fn:length(field_list)==2}">
 									<select id="count2">
 										<option value="1">1</option>
@@ -81,14 +82,15 @@ button {
 										<input type="button" value="추가" id="field_input"
 									style="background-color: black; color: white;"
 									onclick="createInput()"><br/>
-	
 								</c:if>
 						
 								<c:forEach var="field2" items="${list}" varStatus="status">
 									<c:if test="${field2.board_field ne null}">
+							
 										<input type="text" value="${field2.board_field}"
 											name="input${status.count}">
 										<br/>
+										
 									</c:if>
 								</c:forEach>
 								<div id="room_type">
@@ -178,7 +180,6 @@ button {
 			$('#attach').remove();
 			var html = '<div id="attach"></div>';
 			$('#room_type').append(html);
-			$('#field_input').show();
 		}
 
 		function addRow() {
@@ -232,7 +233,6 @@ button {
 				}
 			}
 
-			/* $('#field_input').hide(); */
 		}
 	</script>
 </body>

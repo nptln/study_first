@@ -41,7 +41,7 @@ border: rgba(0,0,0,0);
 			</tr>
 		
 					<c:forEach var="field_list" items="${field_list}">
-					<c:if test="${field_list.BOARD_FIELD ne null}">
+					<c:if test="${field_list.BOARD_FIELD ne null and !empty field_list.BOARD_FIELD}">
 						<tr>
 							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.BOARD_FIELD}</th>
 								<td colspan="3">${field_list.FIELD_DATA}</td>
