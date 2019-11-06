@@ -97,6 +97,7 @@ public class SampleDAO extends AbstractDAO {
 
 	public void boardFieldUpdate(Map<String, Object> map) {
 		update("sample.boardFieldUpdate", map);
+
 	}
 
 	@SuppressWarnings("unchecked")
