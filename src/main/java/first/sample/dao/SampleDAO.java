@@ -136,11 +136,5 @@ public class SampleDAO extends AbstractDAO {
 		update("sample.fieldChkUpdate", map);	
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectFieldNameList(Map<String, Object> map) {
-		return (List<Map<String, Object>>) selectList("sample.selectFieldNameList", map);
-	}
-
-
 
 }

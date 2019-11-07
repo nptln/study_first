@@ -28,7 +28,7 @@ margin:10px 10px 0px 0px;
 				<col width="15%" />
 				<col width="35%" />
 			</colgroup>
-			<caption>게시글 상세</caption>
+			<caption>게시글 수정</caption>
 			<tbody>
 				<tr>
 					<th scope="row">글 번호</th>
@@ -44,18 +44,13 @@ margin:10px 10px 0px 0px;
 					<th scope="row">작성시간</th>
 					<td>${map.CREA_DTM }</td>
 				</tr>
-					<c:forEach var="field_list" items="${field_list}">
+					<c:forEach var="item" items="${data_list}">
 						<tr>
-							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.board_field}</th>
-								<td colspan="3">
-								 <c:set value="false" var="ck"/>
-								<c:forEach var="data_list" items="${data_list}">
-									<c:if test="${field_list.field_idx eq data_list.FIELD_IDX}">
-										<input type="text" value="${field_list.FIELD_DATA}" name="field_data">
-										<input type="hidden" value="${field_list.FIELD_IDX}" name="field_key">
-										<c:set value="true" var="ck"/>
-									</c:if>
-								</c:forEach>
+							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${item.BOARD_FIELD}</th>
+								<td colspan="3">								
+										<input type="text" value="${item.field_data}" name="field_data">
+										<input type="hidden" value="${item.field_idx}" name="field_key">
+							
 								</td>
 						</tr>
 					</c:forEach>

@@ -71,8 +71,6 @@ public class SampleServiceImpl implements SampleService {
 		//확장필드 리스트
 		List<Map<String, Object>> data_list = sampleDAO.selectFieldList(map);
 		resultMap.put("data_list", data_list);
-		List<Map<String, Object>> field_list = sampleDAO.selectFieldNameList(map);
-		resultMap.put("field_list", field_list);
 		return resultMap;
 
 	}

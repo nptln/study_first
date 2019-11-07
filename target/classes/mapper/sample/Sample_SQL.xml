@@ -157,12 +157,14 @@ from (
 	</update>
 	
 	<select id="selectFieldList" parameterType="hashmap" resultType="hashmap">
-	select FD.BOARD_IDX, FIELD_DATA, BOARD_FIELD, FD.FIELD_IDX, FIELD_USE from TB_FIELDDATA FD left JOIN TB_BOARDFIELD BF on FD.field_idx=BF.field_idx where FIELD_USE = 'Y' and IDX=#{IDX}
+	select BF.FIELD_IDX, BF.BOARD_FIELD, FD.field_data
+from TB_BOARDFIELD BF
+left join TB_BOARD TB
+on BF.BOARD_IDX = TB.BOARD_IDX
+left join tb_fielddata FD
+on BF.field_idx = FD.field_idx and TB.IDX = FD.IDX
+where TB.IDX = #{IDX};
 	</select>
 	
-	<select id="selectFieldNameList" parameterType="hashmap" resultType="hashmap">
-	select * from tb_boardfield where field_use='Y'
-	</select>
-
 
 </mapper>

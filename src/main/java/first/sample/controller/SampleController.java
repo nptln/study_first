@@ -227,7 +227,6 @@ public class SampleController {
 		mv.addObject("list", map.get("list"));
 		//확장필드 출력
 		mv.addObject("data_list", map.get("data_list"));
-		mv.addObject("field_list", map.get("field_list"));
 		return mv;
 	}
 

@@ -42,7 +42,7 @@ border: rgba(0,0,0,0);
 					<c:forEach var="field_item" items="${data_list}">
 						<tr>
 							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_item.BOARD_FIELD}</th>
-								<td colspan="3">${field_item.FIELD_DATA}</td>
+								<td colspan="3">${field_item.field_data}</td>
 						</tr>
 					</c:forEach>
 			<tr>
