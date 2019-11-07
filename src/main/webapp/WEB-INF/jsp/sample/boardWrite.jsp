@@ -28,7 +28,7 @@ margin:10px 10px 0px 0px;
 			<caption>게시글 작성</caption>
 			<tbody>
 					<c:forEach var="field_list" items="${field_list}" varStatus="status">
-					<c:if test="${field_list.board_field ne null}">
+					<c:if test="${field_list.field_del eq 'Y'}">
 						<tr>
 							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.board_field}</th>
 								<td colspan="3"><input type="text" name="input${status.count}">

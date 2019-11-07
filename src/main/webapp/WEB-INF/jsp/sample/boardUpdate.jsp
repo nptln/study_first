@@ -45,7 +45,7 @@ margin:10px 10px 0px 0px;
 					<td>${map.CREA_DTM }</td>
 				</tr>
 					<c:forEach var="field_list" items="${field_list}" varStatus="status">
-					<c:if test="${field_list.BOARD_FIELD ne null and !empty field_list.BOARD_FIELD}">
+					<c:if test="${field_list.field_del eq 'Y'}">
 						<tr>
 							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.BOARD_FIELD}</th>
 								<td colspan="3"><input type="text" value="${field_list.FIELD_DATA}" name="input${status.count}">

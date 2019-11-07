@@ -19,6 +19,7 @@ button {
 </head>
 <body>
 	<form id="frm" name="frm">
+	<input type="hidden" name="BOARD_IDX" value="${map.board_idx}">
 		<table class="board_view">
 			<colgroup>
 				<col width="15%" />
@@ -30,23 +31,24 @@ button {
 			<tbody>
 				<tr>
 					<th scope="row">게시판 번호</th>
-					<td>${map.board_idx}</td>
-					<th scope="row">게시판 이름</th>
-					<td><input type="text" id="board_name" name="BOARD_NAME"
-						value="${map.board_name}"></td>
-				</tr>
-				<tr>
+					<td>${map.board_idx}</td> </tr>
+					<tr>
 					<th scope="row">게시판 생성날짜</th>
 					<td>${map.board_date}</td>
-					<th scope="row">확장필드 여부</th>
+				</tr>
+				<tr>
+				<th scope="row">게시판 이름</th>
+					<td><input type="text" id="board_name" name="BOARD_NAME"
+						value="${map.board_name}"></td>
+					<%-- <th scope="row">확장필드 여부</th>
 					<td colspan="3"><input type="radio" name="BOARD_FIELD_CHK"
 						value="Y" onclick="addRow();"
 						${map.board_field_chk eq 'Y' ? 'checked' : ''} />예 <input
 						type="radio" name="BOARD_FIELD_CHK" value="N"
 						onclick="removeRowAll();"
-						${empty map.board_field_chk || map.board_field_chk eq 'N' ? 'checked' : ''}>아니오</td>
+						${empty map.board_field_chk || map.board_field_chk eq 'N' ? 'checked' : ''}>아니오</td> --%>
 				</tr>
-				<c:if test="${map.board_field_chk eq 'N'}">
+				<%-- <c:if test="${map.board_field_chk eq 'N'}">
 					<tr>
 						<th scope="row">확장필드</th>
 						<td id="table">
@@ -54,11 +56,21 @@ button {
 						</td>
 					</tr>
 				</c:if>
-				<c:if test="${map.board_field_chk eq 'Y'}">
+				<c:if test="${map.board_field_chk eq 'Y'}"> --%>
 					<tr>
 						<th scope="row">확장필드</th>
 						<td id="table">
-							<button type="button" id="field_insert" onclick="pf_field_insert();">추가</button>
+							<button type="button" id="field_insert" onclick="pf_field_insert();">추가</button><br/>
+						<c:forEach var="field" items="${list}">
+						<c:if test="${field.board_field ne null}">
+						<div>
+						<input type="hidden" value="${field.field_idx}" name="field_key">
+						<input type="text" value="${field.board_field}" name="field_data">
+						<input type="checkbox" ${field.field_del eq 'N' ? 'checked' : '' } onclick="pf_delCk(this)">사용안함
+						<input type="hidden" name="field_del" value="${field.field_del}">
+						</div>
+						</c:if>
+						</c:forEach>
 							<!--<c:forEach var="field" items="${list}"
 								varStatus="status">
 								<input type="hidden" value="${field.field_idx}"
@@ -98,10 +110,9 @@ button {
 								<div id="attach"></div>
 								</div>
 							</div>-->
-							
 							</td>
 					</tr>
-				</c:if>
+				<%-- </c:if> --%>
 			</tbody>
 		</table>
 	</form>
@@ -144,23 +155,18 @@ button {
 						});
 
 		function fn_openBoardUpdate() {
-			var board_idx = "${map.board_idx}";
 			var comSubmit = new ComSubmit("frm");
 			comSubmit.setUrl("<c:url value='/sample/BoardFieldUpdate.do' />");
-			comSubmit.addParam("BOARD_IDX", board_idx);
 			comSubmit.submit();
-			alert("수정되었습니다.");
 		}
 
 		function fn_openBoardDelete() {
-			var board_idx = "${map.board_idx}";
 			var comSubmit = new ComSubmit("frm");
 			comSubmit.setUrl("<c:url value='/sample/studyBoardDelete.do' />");
-			comSubmit.addParam("BOARD_IDX", board_idx);
 			comSubmit.submit();
 		}
 
-		function removeRowAll() {
+		/* function removeRowAll() {
 			var chk = confirm("확장필드를 삭제하시겠습니까?");
 			if (chk) {
 				$('#contents').remove();
@@ -172,25 +178,33 @@ button {
 				comSubmit.addParam("board_idx", board_idx);
 				comSubmit.submit();
 			}
-		}
+		} */
 		
 		function pf_field_insert(){
 			var length = $("#table").find(".field_text").length;
 			var html = '<div class="field_div'+length+'"><input type="hidden" name="field_key"><input type="text" class="field_text" name="field_data"> <button type="button" onclick="pf_field_delete(this);">삭제</button></div>';
 				
 			$("#table").append(html);
-			
 		}
 		
 		function pf_field_delete(obj){
-			var target = $(obj).closet('div');
+			var target = $(obj).closest('div');
 			
 			//var target = $(obj).data("target");
 			
 			$("#table").find(target).remove();
 		}
+		
+		function pf_delCk(obj){
+			var target = $(obj).closest('div').find('input[name="field_del"]');
+			if($(obj).is(":checked")){
+				$(target).val('N');
+			}else{
+				$(target).val('Y');
+			}
+		}
 
-		function removeRow() {
+		/* function removeRow() {
 			var elem = document.getElementById("field_input");
 			elem.value="추가";
 			$("#field_input").removeAttr("onclick");
@@ -204,9 +218,9 @@ button {
 		function addRow() {
 			var html = '<div class="contents_row" style="display:table-row"><div class="contents_col" style="display:table_cell"><select id="count"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><input type="button" value="추가" id="field_input" style="background-color:black; color:white;" onclick="createInput()"><br/><div id="room_type"><div id="attach"></div></div></div></div>';
 			$('#contents').append(html);
-		}
+		} */
 
-		function createInput() {
+		/* function createInput() {
 			var elem = document.getElementById("field_input");
 			elem.value="삭제";
 			$("#field_input").removeAttr("onclick");
@@ -252,7 +266,7 @@ button {
 				}
 			}
 
-		}
+		} */
 	</script>
 </body>
 </html>

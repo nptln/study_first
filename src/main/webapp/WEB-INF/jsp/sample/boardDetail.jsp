@@ -29,7 +29,7 @@ border: rgba(0,0,0,0);
 		<tbody>
 			<tr>
 				<th scope="row">글 번호</th>
-				<td>${map.TITLE }</td>
+				<td>${map.IDX }</td>
 				<th scope="row">조회수</th>
 				<td>${map.HIT_CNT }</td>
 			</tr>
@@ -41,7 +41,7 @@ border: rgba(0,0,0,0);
 			</tr>
 		
 					<c:forEach var="field_list" items="${field_list}">
-					<c:if test="${field_list.BOARD_FIELD ne null and !empty field_list.BOARD_FIELD}">
+					<c:if test="${field_list.FIELD_DEL eq 'Y'}">
 						<tr>
 							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.BOARD_FIELD}</th>
 								<td colspan="3">${field_list.FIELD_DATA}</td>

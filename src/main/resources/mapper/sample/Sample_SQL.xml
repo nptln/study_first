@@ -29,10 +29,12 @@ UPDATE TB_BOARDLIST SET BOARD_FIELD_CHK='N' WHERE BOARD_IDX = #{board_idx};
 </select>
 
 <update id = "boardFieldUpdate" parameterType="hashmap">
-<![CDATA[ UPDATE TB_BOARDFIELD SET board_field = #{field_data}
-		 where field_idx=#{field_key}; ]]>
+UPDATE TB_BOARDFIELD SET board_field = #{field_data}
+<if test="field_del != null" >
+, field_del = #{field_del}
+</if>
+ where field_idx=#{field_key};
 </update>
-
 
 
 <select id="studyBoardManageDetail" parameterType="hashmap" resultType="hashmap"> 
@@ -121,8 +123,9 @@ from (
 	</update>
 
 	<select id="selectBoardDetail" parameterType="hashmap"
-		resultType="hashmap"> <![CDATA[ SELECT BOARD_NAME, TB.BOARD_IDX, IDX, HIT_CNT, CREA_ID, CREA_DTM, TITLE, CONTENTS FROM TB_BOARD TB, TB_BOARDLIST TBL
-		WHERE IDX = #{IDX} and TB.BOARD_IDX=TBL.BOARD_IDX]]>
+		resultType="hashmap">
+		SELECT BOARD_NAME, TB.BOARD_IDX, IDX, HIT_CNT, CREA_ID, CREA_DTM, TITLE, CONTENTS FROM TB_BOARD TB, TB_BOARDLIST TBL
+		WHERE IDX = #{IDX} and TB.BOARD_IDX=TBL.BOARD_IDX
 	</select>
 
 	<update id="updateBoard" parameterType="hashmap"> 
@@ -157,7 +160,7 @@ from (
 	</update>
 	
 	<select id="selectFieldList" parameterType="hashmap" resultType="hashmap">
-		 <![CDATA[ SELECT IDX, BF.BOARD_IDX, BOARD_FIELD, BF.FIELD_IDX, FIELD_DATA FROM TB_FIELDDATA FD, TB_BOARDFIELD BF WHERE IDX = #{IDX} AND BF.BOARD_IDX = FD.BOARD_IDX and BF.FIELD_IDX=FD.FIELD_IDX; ]]>
+	SELECT IDX, BF.BOARD_IDX, BOARD_FIELD, BF.FIELD_IDX, FIELD_DATA FROM TB_FIELDDATA FD, TB_BOARDFIELD BF WHERE IDX = #{IDX} AND BF.BOARD_IDX = FD.BOARD_IDX and BF.FIELD_IDX=FD.FIELD_IDX
 	</select>
 
 

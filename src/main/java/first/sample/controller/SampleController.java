@@ -29,23 +29,29 @@ public class SampleController {
 		
 		String[] field_key = req.getParameterValues("field_key");
 		String[] field_data = req.getParameterValues("field_data");
+		String[] field_del = req.getParameterValues("field_del");
 		
 		System.out.println("field_key" + Arrays.toString(field_key));
 		System.out.println("field_data" + Arrays.toString(field_data));
+		System.out.println("field_del" + Arrays.toString(field_del));
 
-		sampleService.studyBoardUpdate(commandMap.getMap());
 		
+		if(field_key != null) {
 		for(int i = 0; i< field_key.length; i++){
 			HashMap<String,Object> map = new HashMap<String, Object>();
 			map.put("BOARD_IDX", commandMap.getMap().get("BOARD_IDX"));
 			map.put("field_data", field_data[i]);
+			
 			if(field_key[i].equals("")){
 				sampleService.boardFieldInsert(map);
 			}else {
+				map.put("field_del", field_del[i]);
 				map.put("field_key", field_key[i]);
 				sampleService.boardFieldUpdate(map);
 			}
 		}
+		}
+		sampleService.studyBoardUpdate(commandMap.getMap());
 		return mv;
 	}
 	
