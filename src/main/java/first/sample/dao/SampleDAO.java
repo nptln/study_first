@@ -1,5 +1,6 @@
 package first.sample.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,9 @@ public class SampleDAO extends AbstractDAO {
 
 	public void insertBoard(Map<String, Object> map) throws Exception {
 		insert("sample.insertBoard", map);
+	}
+	
+	public void insertField(HashMap<String, Object> map) {
 		insert("sample.insertField", map);
 	}
 
@@ -30,14 +34,17 @@ public class SampleDAO extends AbstractDAO {
 	}
 
 	
-	  @SuppressWarnings("unchecked") public Map<String, Object>
-	  selectBoardDetail(Map<String, Object> map) throws Exception { 
-		  return (Map<String, Object>) selectOne("sample.selectBoardDetail", map); }
+	  @SuppressWarnings("unchecked")
+	  public Map<String, Object> selectBoardDetail(Map<String, Object> map) throws Exception { 
+		  return (Map<String, Object>) selectOne("sample.selectBoardDetail", map); 
+		  }
 	 
 
 
 	public void updateBoard(Map<String, Object> map) throws Exception {
 		update("sample.updateBoard", map);
+	}
+	public void updateField(HashMap<String, Object> map) throws Exception {
 		update("sample.updateField", map);
 	}
 
@@ -128,5 +135,12 @@ public class SampleDAO extends AbstractDAO {
 		delete("sample.fieldDelete", map);
 		update("sample.fieldChkUpdate", map);	
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectFieldNameList(Map<String, Object> map) {
+		return (List<Map<String, Object>>) selectList("sample.selectFieldNameList", map);
+	}
+
+
 
 }

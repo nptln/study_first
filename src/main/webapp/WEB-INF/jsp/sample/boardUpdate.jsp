@@ -44,14 +44,20 @@ margin:10px 10px 0px 0px;
 					<th scope="row">작성시간</th>
 					<td>${map.CREA_DTM }</td>
 				</tr>
-					<c:forEach var="field_list" items="${field_list}" varStatus="status">
-					<c:if test="${field_list.field_del eq 'Y'}">
+					<c:forEach var="field_list" items="${field_list}">
 						<tr>
-							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.BOARD_FIELD}</th>
-								<td colspan="3"><input type="text" value="${field_list.FIELD_DATA}" name="input${status.count}">
-												<input type="hidden" value="${field_list.FIELD_IDX}" name="field_idx${status.count}"></td>
+							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.board_field}</th>
+								<td colspan="3">
+								 <c:set value="false" var="ck"/>
+								<c:forEach var="data_list" items="${data_list}">
+									<c:if test="${field_list.field_idx eq data_list.FIELD_IDX}">
+										<input type="text" value="${field_list.FIELD_DATA}" name="field_data">
+										<input type="hidden" value="${field_list.FIELD_IDX}" name="field_key">
+										<c:set value="true" var="ck"/>
+									</c:if>
+								</c:forEach>
+								</td>
 						</tr>
-						</c:if>
 					</c:forEach>
 
 				<tr>

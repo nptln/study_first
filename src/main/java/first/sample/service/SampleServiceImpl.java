@@ -69,7 +69,9 @@ public class SampleServiceImpl implements SampleService {
 		List<Map<String, Object>> list = sampleDAO.selectFileList(map);
 		resultMap.put("list", list);
 		//확장필드 리스트
-		List<Map<String, Object>> field_list = sampleDAO.selectFieldList(map);
+		List<Map<String, Object>> data_list = sampleDAO.selectFieldList(map);
+		resultMap.put("data_list", data_list);
+		List<Map<String, Object>> field_list = sampleDAO.selectFieldNameList(map);
 		resultMap.put("field_list", field_list);
 		return resultMap;
 
@@ -167,6 +169,16 @@ public class SampleServiceImpl implements SampleService {
 	@Override
 	public void fieldDelete(Map<String, Object> map) throws Exception {
 		sampleDAO.fieldDelete(map);
+	}
+
+	@Override
+	public void insertField(HashMap<String, Object> map) throws Exception {
+		sampleDAO.insertField(map);
+	}
+
+	@Override
+	public void updateField(HashMap<String, Object> map) throws Exception {
+		sampleDAO.updateField(map);
 	}
 
 }

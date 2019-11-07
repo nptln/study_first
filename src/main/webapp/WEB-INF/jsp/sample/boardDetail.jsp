@@ -39,14 +39,11 @@ border: rgba(0,0,0,0);
 				<th scope="row">작성시간</th>
 				<td>${map.CREA_DTM }</td>
 			</tr>
-		
-					<c:forEach var="field_list" items="${field_list}">
-					<c:if test="${field_list.FIELD_DEL eq 'Y'}">
+					<c:forEach var="field_item" items="${data_list}">
 						<tr>
-							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.BOARD_FIELD}</th>
-								<td colspan="3">${field_list.FIELD_DATA}</td>
+							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_item.BOARD_FIELD}</th>
+								<td colspan="3">${field_item.FIELD_DATA}</td>
 						</tr>
-						</c:if>
 					</c:forEach>
 			<tr>
 				<th scope="row">제목</th>

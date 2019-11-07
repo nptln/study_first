@@ -27,13 +27,14 @@ margin:10px 10px 0px 0px;
 			</colgroup>
 			<caption>게시글 작성</caption>
 			<tbody>
-					<c:forEach var="field_list" items="${field_list}" varStatus="status">
-					<c:if test="${field_list.field_del eq 'Y'}">
+					<c:forEach var="field_list" items="${field_list}">
+					<c:if test="${field_list.field_use eq 'Y'}">
 						<tr>
 							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.board_field}</th>
-								<td colspan="3"><input type="text" name="input${status.count}">
-												<input type="hidden" value="${field_list.field_idx}" name="field_idx${status.count}">
-												</td>
+								<td colspan="3">
+									<input type="text" name="field_data">
+									<input type="hidden" value="${field_list.field_idx}" name="field_key">
+								</td>
 						</tr>
 				</c:if>
 					</c:forEach>

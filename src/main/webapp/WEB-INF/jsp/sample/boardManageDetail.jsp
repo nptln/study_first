@@ -66,8 +66,8 @@ button {
 						<div>
 						<input type="hidden" value="${field.field_idx}" name="field_key">
 						<input type="text" value="${field.board_field}" name="field_data">
-						<input type="checkbox" ${field.field_del eq 'N' ? 'checked' : '' } onclick="pf_delCk(this)">사용안함
-						<input type="hidden" name="field_del" value="${field.field_del}">
+						<input type="checkbox" ${field.field_use eq 'N' ? 'checked' : '' } onclick="pf_delCk(this)">사용안함
+						<input type="hidden" name="field_use" value="${field.field_use}">
 						</div>
 						</c:if>
 						</c:forEach>
@@ -196,7 +196,7 @@ button {
 		}
 		
 		function pf_delCk(obj){
-			var target = $(obj).closest('div').find('input[name="field_del"]');
+			var target = $(obj).closest('div').find('input[name="field_use"]');
 			if($(obj).is(":checked")){
 				$(target).val('N');
 			}else{

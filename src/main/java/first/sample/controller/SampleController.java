@@ -29,11 +29,11 @@ public class SampleController {
 		
 		String[] field_key = req.getParameterValues("field_key");
 		String[] field_data = req.getParameterValues("field_data");
-		String[] field_del = req.getParameterValues("field_del");
+		String[] field_use = req.getParameterValues("field_use");
 		
 		System.out.println("field_key" + Arrays.toString(field_key));
 		System.out.println("field_data" + Arrays.toString(field_data));
-		System.out.println("field_del" + Arrays.toString(field_del));
+		System.out.println("field_use" + Arrays.toString(field_use));
 
 		
 		if(field_key != null) {
@@ -45,7 +45,7 @@ public class SampleController {
 			if(field_key[i].equals("")){
 				sampleService.boardFieldInsert(map);
 			}else {
-				map.put("field_del", field_del[i]);
+				map.put("field_use", field_use[i]);
 				map.put("field_key", field_key[i]);
 				sampleService.boardFieldUpdate(map);
 			}
@@ -182,14 +182,28 @@ public class SampleController {
 
 	@RequestMapping(value = "/sample/insertBoard.do")
 	public ModelAndView insertBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
+			
 		sampleService.insertBoard(commandMap.getMap(), request);
-		System.out.println("글등록시:"+commandMap.getMap());
+		
+		String[] field_key = request.getParameterValues("field_key");
+		String[] field_data = request.getParameterValues("field_data");
+		
+		if(field_key != null) {
+			for(int i = 0; i< field_key.length; i++){
+			HashMap<String,Object> map = new HashMap<String, Object>();
+			map.put("field_data", field_data[i]);
+			map.put("field_key", field_key[i]);
+			map.put("board_idx",  commandMap.getMap().get("board_idx"));
+			map.put("IDX", commandMap.getMap().get("IDX"));
+			sampleService.insertField(map);
+		}
+	}
 		ModelAndView mv = new ModelAndView("/sample/study_boardList");
 		List<Map<String, Object>> list = sampleService.openBoardList(commandMap.getMap());
 		mv.addObject("map", commandMap.getMap());
 		mv.addObject("list", list);
 		return mv;
-	}
+		}
 
 	@RequestMapping(value = "/sample/openBoardDetail.do")
 	public ModelAndView openBoardDetail(CommandMap commandMap) throws Exception {
@@ -199,7 +213,7 @@ public class SampleController {
 		//파일리스트 출력
 		mv.addObject("list", map.get("list"));
 		//확장필드 출력
-		mv.addObject("field_list", map.get("field_list"));
+		mv.addObject("data_list", map.get("data_list"));
 		return mv;
 	}
 
@@ -212,13 +226,30 @@ public class SampleController {
 		//파일리스트 출력
 		mv.addObject("list", map.get("list"));
 		//확장필드 출력
+		mv.addObject("data_list", map.get("data_list"));
 		mv.addObject("field_list", map.get("field_list"));
 		return mv;
 	}
 
 	@RequestMapping(value = "/sample/updateBoard.do")
 	public ModelAndView updateBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("redirect:/sample/openBoardDetail.do");
+		
+		String[] field_key = request.getParameterValues("field_key");
+		String[] field_data = request.getParameterValues("field_data");
+		
+		System.out.println("field_key:"+Arrays.toString(field_key)+"// field_data: "+Arrays.toString(field_data));
+		
+	
+		if(field_key != null) {
+			for(int i = 0; i< field_key.length; i++){
+			HashMap<String,Object> map = new HashMap<String, Object>();
+			map.put("field_data", field_data[i]);
+			map.put("field_key", field_key[i]);
+			map.put("IDX", commandMap.get("IDX"));
+			sampleService.updateField(map);
+		}
+	}
+		ModelAndView mv = new ModelAndView("redirect:/sample/openBoardDetail.do");	
 		sampleService.updateBoard(commandMap.getMap(), request);
 		mv.addObject("IDX", commandMap.get("IDX"));
 		mv.addObject("map", commandMap.getMap());

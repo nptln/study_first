@@ -30,8 +30,8 @@ UPDATE TB_BOARDLIST SET BOARD_FIELD_CHK='N' WHERE BOARD_IDX = #{board_idx};
 
 <update id = "boardFieldUpdate" parameterType="hashmap">
 UPDATE TB_BOARDFIELD SET board_field = #{field_data}
-<if test="field_del != null" >
-, field_del = #{field_del}
+<if test="field_use != null" >
+, field_use = #{field_use}
 </if>
  where field_idx=#{field_key};
 </update>
@@ -111,11 +111,11 @@ from (
 
 	<insert id="insertBoard" parameterType="hashmap"
 		useGeneratedKeys="true" keyProperty="IDX">
-	<![CDATA[ INSERT INTO TB_BOARD (BOARD_IDX, TITLE, CONTENTS, HIT_CNT, DEL_GB, CREA_DTM, CREA_ID ) VALUES (#{board_idx},  #{TITLE}, #{CONTENTS}, 0, 'N', current_timestamp, 'Admin') ]]>
+	 INSERT INTO TB_BOARD (BOARD_IDX, TITLE, CONTENTS, HIT_CNT, DEL_GB, CREA_DTM, CREA_ID ) VALUES (#{board_idx},  #{TITLE}, #{CONTENTS}, 0, 'N', current_timestamp, 'Admin')
 	</insert>
 	
 	<insert id="insertField" parameterType="hashmap">
-	 insert into tb_fielddata (idx, field_data, board_idx, field_idx) values ( #{IDX}, #{input1}, #{board_idx}, #{field_idx1}), (#{IDX}, #{input2}, #{board_idx}, #{field_idx2}), (#{IDX}, #{input3}, #{board_idx}, #{field_idx3})
+	 insert into tb_fielddata (idx, field_data, board_idx, field_idx) values ( #{IDX}, #{field_data}, #{board_idx}, #{field_key})
 	</insert>
 
 	<update id="updateHitCnt" parameterType="hashmap">
@@ -129,14 +129,11 @@ from (
 	</select>
 
 	<update id="updateBoard" parameterType="hashmap"> 
-		<![CDATA[ UPDATE TB_BOARD SET TITLE = #{TITLE}, CONTENTS = #{CONTENTS} WHERE IDX = #{IDX} ]]>
+		UPDATE TB_BOARD SET TITLE = #{TITLE}, CONTENTS = #{CONTENTS} WHERE IDX = #{IDX}
 	</update>
 	
 	<update id="updateField" parameterType="hashmap"> 
-		<![CDATA[ UPDATE TB_FIELDDATA SET FIELD_DATA = (case when field_idx = #{field_idx1} then #{input1}
-											 when field_idx = #{field_idx2} then #{input2}
-											 when field_idx = #{field_idx3} then #{input3} end)
-											  where board_idx=#{board_idx} and idx=#{IDX}]]>
+		UPDATE TB_FIELDDATA SET FIELD_DATA = #{field_data} WHERE FIELD_IDX = #{field_key} AND IDX = #{IDX}
 	</update>
 
 	<update id="deleteBoard" parameterType="hashmap">
@@ -160,7 +157,11 @@ from (
 	</update>
 	
 	<select id="selectFieldList" parameterType="hashmap" resultType="hashmap">
-	SELECT IDX, BF.BOARD_IDX, BOARD_FIELD, BF.FIELD_IDX, FIELD_DATA FROM TB_FIELDDATA FD, TB_BOARDFIELD BF WHERE IDX = #{IDX} AND BF.BOARD_IDX = FD.BOARD_IDX and BF.FIELD_IDX=FD.FIELD_IDX
+	select FD.BOARD_IDX, FIELD_DATA, BOARD_FIELD, FD.FIELD_IDX, FIELD_USE from TB_FIELDDATA FD left JOIN TB_BOARDFIELD BF on FD.field_idx=BF.field_idx where FIELD_USE = 'Y' and IDX=#{IDX}
+	</select>
+	
+	<select id="selectFieldNameList" parameterType="hashmap" resultType="hashmap">
+	select * from tb_boardfield where field_use='Y'
 	</select>
 
 

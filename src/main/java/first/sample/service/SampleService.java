@@ -1,5 +1,6 @@
 package first.sample.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +45,10 @@ public interface SampleService {
 	void fieldDelete(Map<String, Object> map) throws Exception;
 
 	List<Map<String, Object>> boardContentField(Map<String, Object> map) throws Exception;
+
+	void insertField(HashMap<String, Object> map) throws Exception;
+
+	void updateField(HashMap<String, Object> map) throws Exception;
 
 
 
