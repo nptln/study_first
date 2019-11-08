@@ -67,7 +67,9 @@ FROM (
 </select>
 
 <select id="sample.selectBoardManageList" resultType="hashmap" parameterType="hashmap" >
-  SELECT * FROM TB_BOARDLIST
+  SELECT BL.BOARD_IDX, BOARD_NAME, BOARD_DATE,
+(SELECT COUNT(*) FROM TB_BOARDFIELD WHERE  BOARD_IDX = BL.BOARD_IDX AND FIELD_DEL='N') CNT 
+FROM TB_BOARDLIST BL;
 </select>
 
 <select id="sample.writeList" resultType="hashmap" parameterType="hashmap" >

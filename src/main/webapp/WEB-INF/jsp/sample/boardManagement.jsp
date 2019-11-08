@@ -159,9 +159,18 @@ border-color: rgba(0,0,0,0);
 <c:forEach items="${boardList}" var="boardList">
 <tr>
  <input type="hidden" name="BOARD_IDX" value="${boardList.BOARD_IDX}">
-<td><button id="name" style="cursor:pointer; background-color: rgba(0,0,0,0); color:black; width: 100px;" value="${boardList.BOARD_IDX}"/>${boardList.BOARD_NAME}</td>
+<td><button id="name" style="font-weight:bold; cursor:pointer; background-color: rgba(0,0,0,0); color:black; width: 100px;" value="${boardList.BOARD_IDX}"/>${boardList.BOARD_NAME}</td>
 <td>${boardList.BOARD_DATE}</td> 
-<td></td>
+<td>
+<c:choose>
+<c:when test="${boardList.CNT >0}">
+사용중
+</c:when>
+<c:otherwise>
+사용안함
+</c:otherwise>
+</c:choose>
+</td>
 <td><button id="move" style="cursor:pointer;" value="${boardList.BOARD_IDX}"/><input id="button" type="button" value="이동" ></td>
 </tr>
 </c:forEach>
