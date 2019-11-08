@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <style>
@@ -41,7 +40,12 @@ button {
 					<td><input type="text" id="BOARD_NAME" name="BOARD_NAME"
 						value="${map.BOARD_NAME}"></td>			
 				</tr>	
-					<tr>
+				<tr>
+				<th scope="row">확장필드 사용여부</th>
+					<td><input type="checkbox" ${map.FIELD_CHK eq 'Y' ? 'checked':'' } onclick="pf_fieldCk(this)">사용함
+						<input type="hidden" name="FIELD_CHK" value="Y"></td>
+				</tr>				
+					<tr name="CHK_FIELD">
 						<th scope="row">확장필드</th>
 						<td id="table">
 							<button type="button" id="field_insert" onclick="pf_field_insert();">추가</button><br/>
@@ -58,7 +62,7 @@ button {
 						</c:if>
 						</c:forEach>
 							</td>
-					</tr>
+						</tr>
 			</tbody>
 		</table>
 	</form>
@@ -113,12 +117,12 @@ button {
 		}		
 		function pf_field_insert(){
 			var length = $("#table").find(".field_text").length;
-			var html = '<div class="field_div'+length+'"><input type="hidden" name="FIELD_KEY"><input type="text" class="field_text" name="FIELD_DATA"> <button type="button" onclick="pf_FIELD_DELete(this);">삭제</button></div>';
+			var html = '<div class="field_div'+length+'"><input type="hidden" name="FIELD_KEY"><input type="text" class="field_text" name="FIELD_DATA"> <button type="button" onclick="pf_field_delete(this);">삭제</button></div>';
 				
 			$("#table").append(html);
 		}
 		
-		function pf_FIELD_DELete(obj){
+		function pf_field_delete(obj){
 			var target = $(obj).closest('div');
 			
 			//var target = $(obj).data("target");
@@ -135,12 +139,15 @@ button {
 			}
 		}
 		
-		function pf_delCk(obj){
-			var target = $(obj).closest('div').find('input[name="FIELD_DEL"]');
+		function pf_fieldCk(obj){
+			var target;
 			if($(obj).is(":checked")){
-				$(target).val('Y');
+				$("input[name='FIELD_CHK']").val('Y');
+				$("tr[name='CHK_FIELD']").show();
 			}else{
-				$(target).val('N');
+				$("input[name='FIELD_CHK']").val('N');
+				$("tr[name='CHK_FIELD']").hide();
+				
 			}
 		}
 		

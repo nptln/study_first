@@ -163,7 +163,7 @@ border-color: rgba(0,0,0,0);
 <td>${boardList.BOARD_DATE}</td> 
 <td>
 <c:choose>
-<c:when test="${boardList.CNT >0}">
+<c:when test="${boardList.FIELD_CHK eq 'Y'}">
 사용중
 </c:when>
 <c:otherwise>

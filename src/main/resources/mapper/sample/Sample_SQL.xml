@@ -67,9 +67,7 @@ FROM (
 </select>
 
 <select id="sample.selectBoardManageList" resultType="hashmap" parameterType="hashmap" >
-  SELECT BL.BOARD_IDX, BOARD_NAME, BOARD_DATE,
-(SELECT COUNT(*) FROM TB_BOARDFIELD WHERE  BOARD_IDX = BL.BOARD_IDX AND FIELD_DEL='N') CNT 
-FROM TB_BOARDLIST BL;
+SELECT * FROM TB_BOARDLIST
 </select>
 
 <select id="sample.writeList" resultType="hashmap" parameterType="hashmap" >
@@ -77,7 +75,7 @@ FROM TB_BOARDLIST BL;
 </select>
 
 	<insert id="insertBoardManagement" parameterType="hashmap">
-	INSERT INTO TB_BOARDLIST ( BOARD_NAME, BOARD_DATE) VALUES ( #{BOARD_NAME}, CURRENT_TIMESTAMP)
+	INSERT INTO TB_BOARDLIST ( BOARD_NAME, BOARD_DATE, FIELD_CHK) VALUES ( #{BOARD_NAME}, CURRENT_TIMESTAMP, 'N')
 	</insert>
 
 	<select id="sample.selectBoardList" resultType="hashmap" parameterType="hashmap" >
