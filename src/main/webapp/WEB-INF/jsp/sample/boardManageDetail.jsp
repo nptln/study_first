@@ -39,80 +39,26 @@ button {
 				<tr>
 				<th scope="row">게시판 이름</th>
 					<td><input type="text" id="board_name" name="BOARD_NAME"
-						value="${map.board_name}"></td>
-					<%-- <th scope="row">확장필드 여부</th>
-					<td colspan="3"><input type="radio" name="BOARD_FIELD_CHK"
-						value="Y" onclick="addRow();"
-						${map.board_field_chk eq 'Y' ? 'checked' : ''} />예 <input
-						type="radio" name="BOARD_FIELD_CHK" value="N"
-						onclick="removeRowAll();"
-						${empty map.board_field_chk || map.board_field_chk eq 'N' ? 'checked' : ''}>아니오</td> --%>
-				</tr>
-				<%-- <c:if test="${map.board_field_chk eq 'N'}">
-					<tr>
-						<th scope="row">확장필드</th>
-						<td id="table">
-							<div id="contents" style="display: table;"></div>
-						</td>
-					</tr>
-				</c:if>
-				<c:if test="${map.board_field_chk eq 'Y'}"> --%>
+						value="${map.board_name}"></td>			
+				</tr>	
 					<tr>
 						<th scope="row">확장필드</th>
 						<td id="table">
 							<button type="button" id="field_insert" onclick="pf_field_insert();">추가</button><br/>
 						<c:forEach var="field" items="${list}">
-						<c:if test="${field.board_field ne null}">
+						<c:if test="${field.field_del eq 'N'}">
 						<div>
 						<input type="hidden" value="${field.field_idx}" name="field_key">
 						<input type="text" value="${field.board_field}" name="field_data">
-						<input type="checkbox" ${field.field_use eq 'N' ? 'checked' : '' } onclick="pf_delCk(this)">사용안함
+						<input type="checkbox" ${field.field_use eq 'N' ? 'checked' : '' } onclick="pf_useCk(this)">사용안함
+						<input type="checkbox" onclick="pf_delCk(this)">필드삭제
+						<input type="hidden" name="field_del" value="N">
 						<input type="hidden" name="field_use" value="${field.field_use}">
 						</div>
 						</c:if>
 						</c:forEach>
-							<!--<c:forEach var="field" items="${list}"
-								varStatus="status">
-								<input type="hidden" value="${field.field_idx}"
-									name="field_idx${status.count}">
-							</c:forEach>
-							<div id="contents" style="display: table;">
-								
-								<c:if test="${fn:length(field_list)==2}">
-									<select id="count2">
-										<option value="1">1</option>
-									</select>
-										<input type="button" value="추가" id="field_input"
-									style="background-color: black; color: white;"
-									onclick="createInput()"><br/>
-								
-								</c:if>
-								<c:if test="${fn:length(field_list)==1}">
-									<select id="count3">
-										<option value="1">1</option>
-										<option value="2">2</option>
-									</select>
-										<input type="button" value="추가" id="field_input"
-									style="background-color: black; color: white;"
-									onclick="createInput()"><br/>
-								</c:if>
-						
-								<c:forEach var="field2" items="${list}" varStatus="status">
-									<c:if test="${field2.board_field ne null}">
-							
-										<input type="text" value="${field2.board_field}"
-											name="input${status.count}">
-										<br/>
-										
-									</c:if>
-								</c:forEach>
-								<div id="room_type">
-								<div id="attach"></div>
-								</div>
-							</div>-->
 							</td>
 					</tr>
-				<%-- </c:if> --%>
 			</tbody>
 		</table>
 	</form>
@@ -164,22 +110,7 @@ button {
 			var comSubmit = new ComSubmit("frm");
 			comSubmit.setUrl("<c:url value='/sample/studyBoardDelete.do' />");
 			comSubmit.submit();
-		}
-
-		/* function removeRowAll() {
-			var chk = confirm("확장필드를 삭제하시겠습니까?");
-			if (chk) {
-				$('#contents').remove();
-				var html = '<div id= "contents" style="display:table;"></div>';
-				$('#table').append(html);
-				var board_idx = "${map.board_idx}";
-				var comSubmit = new ComSubmit("frm");
-				comSubmit.setUrl("<c:url value='/sample/fieldDelete.do' />");
-				comSubmit.addParam("board_idx", board_idx);
-				comSubmit.submit();
-			}
-		} */
-		
+		}		
 		function pf_field_insert(){
 			var length = $("#table").find(".field_text").length;
 			var html = '<div class="field_div'+length+'"><input type="hidden" name="field_key"><input type="text" class="field_text" name="field_data"> <button type="button" onclick="pf_field_delete(this);">삭제</button></div>';
@@ -195,7 +126,7 @@ button {
 			$("#table").find(target).remove();
 		}
 		
-		function pf_delCk(obj){
+		function pf_useCk(obj){
 			var target = $(obj).closest('div').find('input[name="field_use"]');
 			if($(obj).is(":checked")){
 				$(target).val('N');
@@ -203,70 +134,16 @@ button {
 				$(target).val('Y');
 			}
 		}
-
-		/* function removeRow() {
-			var elem = document.getElementById("field_input");
-			elem.value="추가";
-			$("#field_input").removeAttr("onclick");
-			$("#field_input").attr("onclick", "createInput();");
-			
-			$('#attach').remove();
-			var html = '<div id="attach"></div>';
-			$('#room_type').append(html);
+		
+		function pf_delCk(obj){
+			var target = $(obj).closest('div').find('input[name="field_del"]');
+			if($(obj).is(":checked")){
+				$(target).val('Y');
+			}else{
+				$(target).val('N');
+			}
 		}
-
-		function addRow() {
-			var html = '<div class="contents_row" style="display:table-row"><div class="contents_col" style="display:table_cell"><select id="count"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><input type="button" value="추가" id="field_input" style="background-color:black; color:white;" onclick="createInput()"><br/><div id="room_type"><div id="attach"></div></div></div></div>';
-			$('#contents').append(html);
-		} */
-
-		/* function createInput() {
-			var elem = document.getElementById("field_input");
-			elem.value="삭제";
-			$("#field_input").removeAttr("onclick");
-			$("#field_input").attr("onclick", "removeRow();");
-			
-			var count = $("#count option:selected").val();
-			var count2 = $("#count2 option:selected").val();
-			var count3 = $("#count3 option:selected").val();
-			var resultSpan = document.getElementById("attach");
-			// 수정해야 할 경우 index 값으로 접근해보기..
-			if ($("#count").length) {
-				if (!isNaN(count)) {
-					for (var i = 1; i <= count; i++) {
-						var inputTag = document.createElement("INPUT");
-						var brTag = document.createElement("BR");
-						inputTag.type = "text";
-						inputTag.name = "input" + i;
-						resultSpan.appendChild(inputTag);
-						resultSpan.appendChild(brTag);
-					}
-				}
-			}
-			if ($("#count2").length) {
-				if (!isNaN(count2)) {
-						var inputTag = document.createElement("INPUT");
-						var brTag = document.createElement("BR");
-						inputTag.type = "text";
-						inputTag.name = "input" + '3';
-						resultSpan.appendChild(inputTag);
-						resultSpan.appendChild(brTag);
-				}
-			}
-			if ($("#count3").length) {
-				if (!isNaN(count3)) {
-					for (var i = 1; i <= count3; i++) {
-						var inputTag = document.createElement("INPUT");
-						var brTag = document.createElement("BR");
-						inputTag.type = "text";
-						inputTag.name = "input" + (i+1);
-						resultSpan.appendChild(inputTag);
-						resultSpan.appendChild(brTag);
-					}
-				}
-			}
-
-		} */
+		
 	</script>
 </body>
 </html>

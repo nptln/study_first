@@ -40,7 +40,7 @@ border: rgba(0,0,0,0);
 				<td>${map.CREA_DTM }</td>
 			</tr>
 					<c:forEach var="field_item" items="${data_list}">
-				<c:if test="${field_item.FIELD_USE eq 'Y'}">
+				<c:if test="${field_item.FIELD_USE eq 'Y' and field_item.FIELD_DEL eq 'N'}">
 						<tr>
 							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_item.BOARD_FIELD}</th>
 								<td colspan="3">${field_item.field_data}</td>

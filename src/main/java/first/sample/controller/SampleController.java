@@ -30,10 +30,12 @@ public class SampleController {
 		String[] field_key = req.getParameterValues("field_key");
 		String[] field_data = req.getParameterValues("field_data");
 		String[] field_use = req.getParameterValues("field_use");
+		String[] field_del = req.getParameterValues("field_del");
 		
 		System.out.println("field_key" + Arrays.toString(field_key));
 		System.out.println("field_data" + Arrays.toString(field_data));
 		System.out.println("field_use" + Arrays.toString(field_use));
+		System.out.println("field_del" + Arrays.toString(field_del));
 
 		
 		if(field_key != null) {
@@ -46,6 +48,7 @@ public class SampleController {
 				sampleService.boardFieldInsert(map);
 			}else {
 				map.put("field_use", field_use[i]);
+				map.put("field_del", field_del[i]);
 				map.put("field_key", field_key[i]);
 				sampleService.boardFieldUpdate(map);
 			}

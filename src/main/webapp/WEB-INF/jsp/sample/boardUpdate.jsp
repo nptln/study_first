@@ -45,7 +45,7 @@ margin:10px 10px 0px 0px;
 					<td>${map.CREA_DTM }</td>
 				</tr>
 					<c:forEach var="item" items="${data_list}">
-					<c:if test="${item.FIELD_USE eq 'Y'}">
+					<c:if test="${item.FIELD_USE eq 'Y' and item.FIELD_DEL eq 'N'}">
 						<tr>
 							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${item.BOARD_FIELD}</th>
 								<td colspan="3">								

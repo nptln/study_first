@@ -19,9 +19,9 @@ UPDATE TB_BOARDLIST SET BOARD_FIELD_CHK='N' WHERE BOARD_IDX = #{board_idx};
 
 <insert id="boardFieldInsert" parameterType="hashmap">
 	INSERT INTO TB_BOARDFIELD 
-	(board_idx, board_field, field_use) 
+	(board_idx, board_field, field_use, field_del) 
 	VALUES 
-	( #{BOARD_IDX}, #{field_data}, 'Y')
+	( #{BOARD_IDX}, #{field_data}, 'Y', 'N')
 	</insert>
 
 <select id="boardFieldSelect" parameterType="hashmap" resultType="hashmap">
@@ -30,8 +30,8 @@ UPDATE TB_BOARDLIST SET BOARD_FIELD_CHK='N' WHERE BOARD_IDX = #{board_idx};
 
 <update id = "boardFieldUpdate" parameterType="hashmap">
 UPDATE TB_BOARDFIELD SET board_field = #{field_data}
-<if test="field_use != null" >
-, field_use = #{field_use}
+<if test="field_use != null or field_del != null" >
+, field_use = #{field_use} , field_del = #{field_del}
 </if>
  where field_idx=#{field_key};
 </update>
@@ -161,7 +161,7 @@ from (
 	</update>
 	
 	<select id="selectFieldList" parameterType="hashmap" resultType="hashmap">
-	select BF.FIELD_IDX, BF.BOARD_FIELD, FIELD_USE, FD.field_data
+	select BF.FIELD_IDX, BF.BOARD_FIELD, FIELD_USE, FIELD_DEL, FD.field_data
 from TB_BOARDFIELD BF
 left join TB_BOARD TB
 on BF.BOARD_IDX = TB.BOARD_IDX

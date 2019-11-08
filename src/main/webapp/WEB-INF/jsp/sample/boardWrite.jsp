@@ -28,7 +28,7 @@ margin:10px 10px 0px 0px;
 			<caption>게시글 작성</caption>
 			<tbody>
 					<c:forEach var="field_list" items="${field_list}">
-					<c:if test="${field_list.field_use eq 'Y'}">
+					<c:if test="${field_list.field_use eq 'Y' and field_list.field_del eq 'N'}">
 						<tr>
 							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.board_field}</th>
 								<td colspan="3">
