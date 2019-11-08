@@ -20,7 +20,7 @@ margin:10px 10px 0px 0px;
 </head>
 <body>
 	<form id="frm" name="frm" enctype="multipart/form-data">
-				<input type="hidden" id="BOARD_IDX" name="BOARD_IDX" value="${map.BOARD_IDX}"/>
+				<input type="hidden" name="board_idx" value="${map.BOARD_IDX}"/>
 		<table class="board_view">
 			<colgroup>
 				<col width="15%" />
@@ -45,14 +45,15 @@ margin:10px 10px 0px 0px;
 					<td>${map.CREA_DTM }</td>
 				</tr>
 					<c:forEach var="item" items="${data_list}">
+					<c:if test="${item.FIELD_USE eq 'Y'}">
 						<tr>
 							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${item.BOARD_FIELD}</th>
 								<td colspan="3">								
 										<input type="text" value="${item.field_data}" name="field_data">
-										<input type="hidden" value="${item.field_idx}" name="field_key">
-							
+										<input type="hidden" value="${item.FIELD_IDX}" name="field_key">
 								</td>
 						</tr>
+						</c:if>
 					</c:forEach>
 
 				<tr>
@@ -137,7 +138,6 @@ margin:10px 10px 0px 0px;
 		function fn_updateBoard() {
 			var comSubmit = new ComSubmit("frm");
 			comSubmit.setUrl("<c:url value='/sample/updateBoard.do' />");
-			comSubmit.addParam("board_idx", $("#BOARD_IDX").val());
 			comSubmit.addParam("board_name", board_name);
 			comSubmit.submit();
 		}
@@ -146,7 +146,6 @@ margin:10px 10px 0px 0px;
 			var comSubmit = new ComSubmit();
 			comSubmit.setUrl("<c:url value='/sample/deleteBoard.do' />");
 			comSubmit.addParam("IDX", $("#IDX").val());
-			comSubmit.addParam("board_idx", $("#BOARD_IDX").val());
 			comSubmit.addParam("board_name", board_name);
 			comSubmit.submit();
 		}

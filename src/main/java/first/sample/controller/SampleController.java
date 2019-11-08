@@ -236,6 +236,7 @@ public class SampleController {
 		String[] field_key = request.getParameterValues("field_key");
 		String[] field_data = request.getParameterValues("field_data");
 		
+		System.out.println(commandMap.getMap());
 		System.out.println("field_key:"+Arrays.toString(field_key)+"// field_data: "+Arrays.toString(field_data));
 		
 	
@@ -245,6 +246,7 @@ public class SampleController {
 			map.put("field_data", field_data[i]);
 			map.put("field_key", field_key[i]);
 			map.put("IDX", commandMap.get("IDX"));
+			map.put("board_idx", commandMap.get("board_idx"));
 			sampleService.updateField(map);
 		}
 	}

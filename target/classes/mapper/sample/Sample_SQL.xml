@@ -132,8 +132,12 @@ from (
 		UPDATE TB_BOARD SET TITLE = #{TITLE}, CONTENTS = #{CONTENTS} WHERE IDX = #{IDX}
 	</update>
 	
-	<update id="updateField" parameterType="hashmap"> 
+	<!-- <update id="updateField" parameterType="hashmap"> 
 		UPDATE TB_FIELDDATA SET FIELD_DATA = #{field_data} WHERE FIELD_IDX = #{field_key} AND IDX = #{IDX}
+	</update> -->
+	
+	<update id="updateField" parameterType="hashmap"> 
+		INSERT INTO TB_FIELDDATA VALUES(#{IDX}, #{field_data}, #{board_idx}, #{field_key}) ON DUPLICATE KEY UPDATE field_data=#{field_data}, board_idx=#{field_key}
 	</update>
 
 	<update id="deleteBoard" parameterType="hashmap">
@@ -157,7 +161,7 @@ from (
 	</update>
 	
 	<select id="selectFieldList" parameterType="hashmap" resultType="hashmap">
-	select BF.FIELD_IDX, BF.BOARD_FIELD, FD.field_data
+	select BF.FIELD_IDX, BF.BOARD_FIELD, FIELD_USE, FD.field_data
 from TB_BOARDFIELD BF
 left join TB_BOARD TB
 on BF.BOARD_IDX = TB.BOARD_IDX
