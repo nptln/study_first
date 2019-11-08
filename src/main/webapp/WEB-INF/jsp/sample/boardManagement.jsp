@@ -109,7 +109,7 @@ text-align: center;
 text-align: right;
 }
 
-.board_create_modal .bottom .contents .board_name{
+.board_create_modal .bottom .contents .BOARD_NAME{
 width:236px;
 height:28px;
 }
@@ -132,7 +132,7 @@ color:white;
 margin-left:60px;
 }
 
-#board_name{
+#BOARD_NAME{
 background-color: rgba(0,0,0,0);
 color: black;
 font-size: 15px;
@@ -158,14 +158,11 @@ border-color: rgba(0,0,0,0);
 <tbody>
 <c:forEach items="${boardList}" var="boardList">
 <tr>
- <input type="hidden" name="board_idx" value="${boardList.board_idx}">
-<td><button id="name" style="cursor:pointer; background-color: rgba(0,0,0,0); color:black; width: 100px;" value="${boardList.board_idx}"/>${boardList.board_name}</td>
-<td>${boardList.board_date}</td> 
-<td><c:if test="${boardList.board_field_chk eq 'Y'}">사용</c:if>
-	<c:if test="${boardList.board_field_chk eq 'N'}">미사용</c:if></td>
-<td><button id="move" style="cursor:pointer;" value="${boardList.board_idx}"/><input id="button" type="button" value="이동" ></td>
-<!-- <td><input type="button" value="수정" style="background-color: black; color: white;" onclick="fn_update();"></td>
-<td><input type="button" value="삭제" style="background-color: black; color: white;" onclick="fn_delete();"></td> -->
+ <input type="hidden" name="BOARD_IDX" value="${boardList.BOARD_IDX}">
+<td><button id="name" style="cursor:pointer; background-color: rgba(0,0,0,0); color:black; width: 100px;" value="${boardList.BOARD_IDX}"/>${boardList.BOARD_NAME}</td>
+<td>${boardList.BOARD_DATE}</td> 
+<td></td>
+<td><button id="move" style="cursor:pointer;" value="${boardList.BOARD_IDX}"/><input id="button" type="button" value="이동" ></td>
 </tr>
 </c:forEach>
 </tbody>
@@ -188,7 +185,7 @@ x
 <table class="contents">
 <tr>
 <th>게시판 이름</th>
-<td><input type="text" name="board_name" class="board_name" placeholder="게시판 이름"/></td>
+<td><input type="text" name="BOARD_NAME" class="BOARD_NAME" placeholder="게시판 이름"/></td>
 </tr>
 </table>
 </form>
@@ -212,21 +209,21 @@ $(document).ready(function() {
 	    var tr = btn.parent().parent();
 	    var td = tr.children();
 	    
-	    var board_name = td.eq(1).text();
+	    var BOARD_NAME = td.eq(1).text();
 	    
 	    var comSubmit = new ComSubmit();
 
 	    if($(this).attr('id') == 'move'){
 	    	 comSubmit.setUrl("<c:url value='/sample/studyBoardList.do'/>");
-	         comSubmit.addParam("board_idx", test);
-	         comSubmit.addParam("board_name", board_name);
+	         comSubmit.addParam("BOARD_IDX", test);
+	         comSubmit.addParam("BOARD_NAME", BOARD_NAME);
 	         comSubmit.submit();
 	    }
 	    
 	    if($(this).attr('id') == 'name'){
 	    	  comSubmit.setUrl("<c:url value='/sample/studyBoardManageDetail.do'/>");
-	         comSubmit.addParam("board_idx", test);
-	         comSubmit.addParam("board_name", board_name);
+	         comSubmit.addParam("BOARD_IDX", test);
+	         comSubmit.addParam("BOARD_NAME", BOARD_NAME);
 	         comSubmit.submit();
 	    }
 	});
@@ -265,9 +262,9 @@ function wrapCreateBoardByMask() {
 	
 function insert_submit(){
 	var form = document.board_create_insert_form;
-	if(form.board_name.value==""||form.board_name.value==null){
+	if(form.BOARD_NAME.value==""||form.BOARD_NAME.value==null){
 	alert("게시판 이름을 입력해주세요");
-	form.board_name.focus();
+	form.BOARD_NAME.focus();
 	return false;
 	}
 	form.submit();
@@ -279,12 +276,12 @@ function ManageDetail(){
 	    var td = tr.children();
 	   
 	    
-	    var board_idx = td.eq(0).text();
-	    var board_name = td.eq(1).text();
+	    var BOARD_IDX = td.eq(0).text();
+	    var BOARD_NAME = td.eq(1).text();
 	  
 	    var name = $("#a_name").text();
 	    alert(name);
-		alert("info:"+board_idx+" , "+board_name);
+		alert("info:"+BOARD_IDX+" , "+BOARD_NAME);
 }
 	
 </script>

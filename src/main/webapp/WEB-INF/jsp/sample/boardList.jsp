@@ -40,7 +40,7 @@
             e.preventDefault();
             fn_openBoardWrite();
          });
-         $("a[name='title']").on("click", function(e) {
+         $("a[name='TITLE']").on("click", function(e) {
           //제목 
             e.preventDefault();
             fn_openBoardDetail($(this));
@@ -93,10 +93,10 @@
             gfn_renderPaging(params);
             var str = "";
             $.each(data.list, function(key, value) {
-                  str += "<tr>" + "<td>" + value.IDX + "</td>" + "<td class='title'>" + "<a href='#this' name='title'>" + value.TITLE + "</a>" + "<input type='hidden' name='title' value=" + value.IDX + ">" + "</td>" + "<td>" + value.HIT_CNT + "</td>" + "<td>" + value.CREA_DTM + "</td>" + "</tr>";
+                  str += "<tr>" + "<td>" + value.IDX + "</td>" + "<td class='title'>" + "<a href='#this' name='TITLE'>" + value.TITLE + "</a>" + "<input type='hidden' name='TITLE' value=" + value.IDX + ">" + "</td>" + "<td>" + value.HIT_CNT + "</td>" + "<td>" + value.CREA_DTM + "</td>" + "</tr>";
               });
             body.append(str);
-            $("a[name='title']").on("click", function(e) { 
+            $("a[name='TITLE']").on("click", function(e) { 
             	//제목 
                e.preventDefault();
                fn_openBoardDetail($(this));

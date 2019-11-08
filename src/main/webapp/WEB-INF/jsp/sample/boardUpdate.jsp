@@ -20,7 +20,7 @@ margin:10px 10px 0px 0px;
 </head>
 <body>
 	<form id="frm" name="frm" enctype="multipart/form-data">
-				<input type="hidden" name="board_idx" value="${map.BOARD_IDX}"/>
+				<input type="hidden" name="BOARD_IDX" value="${map.BOARD_IDX}"/>
 		<table class="board_view">
 			<colgroup>
 				<col width="15%" />
@@ -49,8 +49,8 @@ margin:10px 10px 0px 0px;
 						<tr>
 							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${item.BOARD_FIELD}</th>
 								<td colspan="3">								
-										<input type="text" value="${item.field_data}" name="field_data">
-										<input type="hidden" value="${item.FIELD_IDX}" name="field_key">
+										<input type="text" value="${item.FIELD_DATA}" name="FIELD_DATA">
+										<input type="hidden" value="${item.FIELD_IDX}" name="FIELD_KEY">
 								</td>
 						</tr>
 						</c:if>
@@ -89,21 +89,21 @@ margin:10px 10px 0px 0px;
 		</table>
 	</form>
 	<button href="#this"  id="addFile">파일 추가</a>
-	<input type="hidden" name="board_name" value="${map.BOARD_NAME}" >
-	<button id="board_idx" style="cursor:pointer;" value="${map.BOARD_IDX}">목록으로</button>
+	<input type="hidden" name="BOARD_NAME" value="${map.BOARD_NAME}" >
+	<button id="BOARD_IDX" style="cursor:pointer;" value="${map.BOARD_IDX}">목록으로</button>
 	<button href="#this"  id="update">저장하기</a>
 	<button href="#this"  id="delete">삭제하기</a>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<script type="text/javascript">
 	var gfv_count = '${fn:length(list)+1}';
-	var board_name = $('input[name=board_name]').val();
+	var BOARD_NAME = $('input[name=BOARD_NAME]').val();
 		$(document).ready(function() {
-			$("#board_idx").on("click", function(e) {
+			$("#BOARD_IDX").on("click", function(e) {
 			    var test = $(this).val();
 			    var comSubmit = new ComSubmit();
 			    comSubmit.setUrl("<c:url value='/sample/studyBoardList.do' />");
-		        comSubmit.addParam("board_idx", test);
-		        comSubmit.addParam("board_name", board_name);
+		        comSubmit.addParam("BOARD_IDX", test);
+		        comSubmit.addParam("BOARD_NAME", BOARD_NAME);
 		       comSubmit.submit();
 			});
 			$("#update").on("click", function(e) {
@@ -138,7 +138,7 @@ margin:10px 10px 0px 0px;
 		function fn_updateBoard() {
 			var comSubmit = new ComSubmit("frm");
 			comSubmit.setUrl("<c:url value='/sample/updateBoard.do' />");
-			comSubmit.addParam("board_name", board_name);
+			comSubmit.addParam("BOARD_NAME", BOARD_NAME);
 			comSubmit.submit();
 		}
 
@@ -146,7 +146,7 @@ margin:10px 10px 0px 0px;
 			var comSubmit = new ComSubmit();
 			comSubmit.setUrl("<c:url value='/sample/deleteBoard.do' />");
 			comSubmit.addParam("IDX", $("#IDX").val());
-			comSubmit.addParam("board_name", board_name);
+			comSubmit.addParam("BOARD_NAME", BOARD_NAME);
 			comSubmit.submit();
 		}
 		function fn_addFile(){

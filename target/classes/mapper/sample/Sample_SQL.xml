@@ -2,57 +2,53 @@
 <mapper namespace="sample">
 
 <select id="boardContentSelect" parameterType="hashmap" resultType="hashmap">
- select * from tb_boardlist tbl left join tb_boardfield tb on tb.board_idx=tbl.board_idx where tbl.board_idx=#{board_idx};
+ SELECT * FROM TB_BOARDLIST TBL LEFT JOIN TB_BOARDFIELD TB ON TB.BOARD_IDX=TBL.BOARD_IDX WHERE TBL.BOARD_IDX=#{BOARD_IDX};
 </select>
 
 <select id="boardContentField" parameterType="hashmap" resultType="hashmap">
- select * from tb_boardlist tbl left join tb_boardfield tb on tb.board_idx=tbl.board_idx where tbl.board_idx=#{board_idx} and board_field is not null;
+ SELECT * FROM TB_BOARDLIST TBL LEFT JOIN TB_BOARDFIELD TB ON TB.BOARD_IDX=TBL.BOARD_IDX WHERE TBL.BOARD_IDX=#{BOARD_IDX} AND BOARD_FIELD IS NOT NULL;
 </select>
 
 <delete id="sample.fieldDelete" parameterType="hashmap">
- delete from tb_boardfield where board_idx=#{board_idx};
+ DELETE FROM TB_BOARDFIELD WHERE BOARD_IDX=#{BOARD_IDX};
 </delete>
-
-<update id="sample.fieldChkUpdate" parameterType="hashmap">
-UPDATE TB_BOARDLIST SET BOARD_FIELD_CHK='N' WHERE BOARD_IDX = #{board_idx};
-</update>
 
 <insert id="boardFieldInsert" parameterType="hashmap">
 	INSERT INTO TB_BOARDFIELD 
-	(board_idx, board_field, field_use, field_del) 
+	(BOARD_IDX, BOARD_FIELD, FIELD_USE, FIELD_DEL) 
 	VALUES 
-	( #{BOARD_IDX}, #{field_data}, 'Y', 'N')
+	( #{BOARD_IDX}, #{FIELD_DATA}, 'Y', 'N')
 	</insert>
 
 <select id="boardFieldSelect" parameterType="hashmap" resultType="hashmap">
-<![CDATA[ SELECT * FROM TB_BOARDFIELD WHERE BOARD_IDX = #{BOARD_IDX}]]>
+SELECT * FROM TB_BOARDFIELD WHERE BOARD_IDX = #{BOARD_IDX}
 </select>
 
 <update id = "boardFieldUpdate" parameterType="hashmap">
-UPDATE TB_BOARDFIELD SET board_field = #{field_data}
-<if test="field_use != null or field_del != null" >
-, field_use = #{field_use} , field_del = #{field_del}
+UPDATE TB_BOARDFIELD SET BOARD_FIELD = #{FIELD_DATA}
+<if test="FIELD_USE != null or FIELD_DEL != null" >
+, FIELD_USE = #{FIELD_USE} , FIELD_DEL = #{FIELD_DEL}
 </if>
- where field_idx=#{field_key};
+ WHERE FIELD_IDX=#{FIELD_KEY};
 </update>
 
 
 <select id="studyBoardManageDetail" parameterType="hashmap" resultType="hashmap"> 
-<![CDATA[ SELECT * FROM TB_BOARDLIST WHERE BOARD_IDX = #{board_idx}]]>
+SELECT * FROM TB_BOARDLIST WHERE BOARD_IDX = #{BOARD_IDX}
 	</select>
 
 <delete id="sample.studyBoarddelete" parameterType="hashmap">
-<![CDATA[ DELETE FROM TB_BOARDLIST WHERE BOARD_IDX = #{BOARD_IDX} ]]>
+ DELETE FROM TB_BOARDLIST WHERE BOARD_IDX = #{BOARD_IDX} 
 </delete>
 
 <update id="sample.studyBoardUpdate" parameterType="hashmap"> 
-<![CDATA[ UPDATE TB_BOARDLIST SET BOARD_NAME=#{BOARD_NAME}, BOARD_FIELD_CHK=#{BOARD_FIELD_CHK} WHERE BOARD_IDX = #{BOARD_IDX} ]]>
+ UPDATE TB_BOARDLIST SET BOARD_NAME=#{BOARD_NAME} WHERE BOARD_IDX = #{BOARD_IDX}
 </update>
 
 <select id="sample.openBoardList" resultType="hashmap" parameterType="hashmap" >
-   <![CDATA[
+
  SELECT *
-from (
+FROM (
 	SELECT
            IDX,
            TITLE,
@@ -62,13 +58,12 @@ from (
        FROM
            TB_BOARD TB
        RIGHT JOIN TB_BOARDLIST TBL
-       ON TB.board_idx = TBL.board_idx
-        where del_gb = 'n'
+       ON TB.BOARD_IDX = TBL.BOARD_IDX
+        WHERE DEL_GB = 'N'
       ) A 
- where A.board_idx=#{board_idx}
+ WHERE A.BOARD_IDX=#{BOARD_IDX}
        ORDER BY 
-           IDX desc;
-   ]]>
+           IDX DESC;
 </select>
 
 <select id="sample.selectBoardManageList" resultType="hashmap" parameterType="hashmap" >
@@ -76,15 +71,15 @@ from (
 </select>
 
 <select id="sample.writeList" resultType="hashmap" parameterType="hashmap" >
-  SELECT * FROM TB_BOARDLIST WHERE BOARD_IDX = #{board_idx}
+  SELECT * FROM TB_BOARDLIST WHERE BOARD_IDX = #{BOARD_IDX}
 </select>
 
 	<insert id="insertBoardManagement" parameterType="hashmap">
-	<![CDATA[ INSERT INTO TB_BOARDLIST ( board_name, board_date) VALUES ( #{board_name}, current_timestamp) ]]>
+	INSERT INTO TB_BOARDLIST ( BOARD_NAME, BOARD_DATE) VALUES ( #{BOARD_NAME}, CURRENT_TIMESTAMP)
 	</insert>
 
 	<select id="sample.selectBoardList" resultType="hashmap" parameterType="hashmap" >
-   <![CDATA[
+
        SELECT
            (
                SELECT
@@ -105,69 +100,65 @@ from (
        ORDER BY 
            IDX DESC
        LIMIT #{START} , #{END} 
-   ]]>
+
 </select>
 
 
 	<insert id="insertBoard" parameterType="hashmap"
 		useGeneratedKeys="true" keyProperty="IDX">
-	 INSERT INTO TB_BOARD (BOARD_IDX, TITLE, CONTENTS, HIT_CNT, DEL_GB, CREA_DTM, CREA_ID ) VALUES (#{board_idx},  #{TITLE}, #{CONTENTS}, 0, 'N', current_timestamp, 'Admin')
+	 INSERT INTO TB_BOARD (BOARD_IDX, TITLE, CONTENTS, HIT_CNT, DEL_GB, CREA_DTM, CREA_ID ) VALUES (#{BOARD_IDX},  #{TITLE}, #{CONTENTS}, 0, 'N', current_timestamp, 'Admin')
 	</insert>
 	
 	<insert id="insertField" parameterType="hashmap">
-	 insert into tb_fielddata (idx, field_data, board_idx, field_idx) values ( #{IDX}, #{field_data}, #{board_idx}, #{field_key})
+	 INSERT INTO TB_FIELDDATA (IDX, FIELD_DATA, BOARD_IDX, FIELD_IDX) VALUES ( #{IDX}, #{FIELD_DATA}, #{BOARD_IDX}, #{FIELD_KEY})
 	</insert>
 
 	<update id="updateHitCnt" parameterType="hashmap">
-	<![CDATA[ UPDATE TB_BOARD SET HIT_CNT = IFNULL(HIT_CNT, 0) + 1 WHERE IDX = #{IDX} ]]>
+	 UPDATE TB_BOARD SET HIT_CNT = IFNULL(HIT_CNT, 0) + 1 WHERE IDX = #{IDX} 
 	</update>
 
 	<select id="selectBoardDetail" parameterType="hashmap"
 		resultType="hashmap">
 		SELECT BOARD_NAME, TB.BOARD_IDX, IDX, HIT_CNT, CREA_ID, CREA_DTM, TITLE, CONTENTS FROM TB_BOARD TB, TB_BOARDLIST TBL
-		WHERE IDX = #{IDX} and TB.BOARD_IDX=TBL.BOARD_IDX
+		WHERE IDX = #{IDX} AND TB.BOARD_IDX=TBL.BOARD_IDX
 	</select>
 
 	<update id="updateBoard" parameterType="hashmap"> 
 		UPDATE TB_BOARD SET TITLE = #{TITLE}, CONTENTS = #{CONTENTS} WHERE IDX = #{IDX}
 	</update>
 	
-	<!-- <update id="updateField" parameterType="hashmap"> 
-		UPDATE TB_FIELDDATA SET FIELD_DATA = #{field_data} WHERE FIELD_IDX = #{field_key} AND IDX = #{IDX}
-	</update> -->
-	
 	<update id="updateField" parameterType="hashmap"> 
-		INSERT INTO TB_FIELDDATA VALUES(#{IDX}, #{field_data}, #{board_idx}, #{field_key}) ON DUPLICATE KEY UPDATE field_data=#{field_data}, board_idx=#{field_key}
+		INSERT INTO TB_FIELDDATA VALUES(#{IDX}, #{FIELD_DATA}, #{BOARD_IDX}, #{FIELD_KEY}) ON DUPLICATE KEY UPDATE FIELD_DATA=#{FIELD_DATA}, BOARD_IDX=#{FIELD_KEY}
 	</update>
 
 	<update id="deleteBoard" parameterType="hashmap">
-		<![CDATA[ UPDATE TB_BOARD SET DEL_GB = 'Y' WHERE IDX = #{IDX} ]]>
+	 UPDATE TB_BOARD SET DEL_GB = 'Y' WHERE IDX = #{IDX}
 	</update>
 
 	<insert id="insertFile" parameterType="hashmap"> 
-		<![CDATA[ INSERT INTO TB_FILE (BOARD_IDX, ORIGINAL_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CREA_ID ) VALUES (#{BOARD_IDX}, #{ORIGINAL_FILE_NAME}, #{STORED_FILE_NAME}, #{FILE_SIZE}, 'Admin' ) ]]>
+	 INSERT INTO TB_FILE (BOARD_IDX, ORIGINAL_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CREA_ID ) VALUES (#{BOARD_IDX}, #{ORIGINAL_FILE_NAME}, #{STORED_FILE_NAME}, #{FILE_SIZE}, 'Admin' ) 
 	</insert>
 
 	<select id="selectFileList" parameterType="hashmap" resultType="hashmap">
-		 <![CDATA[ SELECT IDX, ORIGINAL_FILE_NAME, ROUND(FILE_SIZE/1024,1) AS FILE_SIZE FROM TB_FILE WHERE IDX = #{IDX} AND DEL_GB = 'N' ]]>
+	 SELECT IDX, ORIGINAL_FILE_NAME, ROUND(FILE_SIZE/1024,1) AS FILE_SIZE FROM TB_FILE WHERE IDX = #{IDX} AND DEL_GB = 'N'
 	</select>
 
 	<update id="deleteFileList" parameterType="hashmap">
-	<![CDATA[ UPDATE TB_FILE SET DEL_GB = 'Y' WHERE IDX = #{IDX} ]]>
+	 UPDATE TB_FILE SET DEL_GB = 'Y' WHERE IDX = #{IDX} 
 	</update>
 	
 	<update id="updateFile" parameterType="hashmap">
-	<![CDATA[ UPDATE TB_FILE SET DEL_GB = 'N' WHERE IDX = #{FILE_IDX} ]]>
+	 UPDATE TB_FILE SET DEL_GB = 'N' WHERE IDX = #{FILE_IDX} 
 	</update>
 	
 	<select id="selectFieldList" parameterType="hashmap" resultType="hashmap">
-	select BF.FIELD_IDX, BF.BOARD_FIELD, FIELD_USE, FIELD_DEL, FD.field_data
-from TB_BOARDFIELD BF
-left join TB_BOARD TB
-on BF.BOARD_IDX = TB.BOARD_IDX
-left join tb_fielddata FD
-on BF.field_idx = FD.field_idx and TB.IDX = FD.IDX
-where TB.IDX = #{IDX};
+	SELECT BF.FIELD_IDX, BF.BOARD_FIELD, FIELD_USE, FIELD_DEL, FD.FIELD_DATA
+FROM TB_BOARDFIELD BF
+LEFT JOIN TB_BOARD TB
+ON BF.BOARD_IDX = TB.BOARD_IDX
+LEFT JOIN TB_FIELDDATA FD
+ON BF.FIELD_IDX = FD.FIELD_IDX AND TB.IDX = FD.IDX
+WHERE TB.IDX = #{IDX};
 	</select>
 	
 

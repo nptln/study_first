@@ -43,7 +43,7 @@ border: rgba(0,0,0,0);
 				<c:if test="${field_item.FIELD_USE eq 'Y' and field_item.FIELD_DEL eq 'N'}">
 						<tr>
 							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_item.BOARD_FIELD}</th>
-								<td colspan="3">${field_item.field_data}</td>
+								<td colspan="3">${field_item.FIELD_DATA}</td>
 						</tr>
 				</c:if>
 					</c:forEach>
@@ -72,19 +72,19 @@ border: rgba(0,0,0,0);
 			</tr>
 		</tbody>
 	</table>
-	<input type="hidden" name="board_name" value="${map.BOARD_NAME}" >
-	<button id="board_idx" style="cursor:pointer;" value="${map.BOARD_IDX}">목록으로</button>
+	<input type="hidden" name="BOARD_NAME" value="${map.BOARD_NAME}" >
+	<button id="BOARD_IDX" style="cursor:pointer;" value="${map.BOARD_IDX}">목록으로</button>
 	<button href="#this" id="update">수정하기</button>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var board_name = $('input[name=board_name]').val();
-			$("#board_idx").on("click", function(e) {
+			var BOARD_NAME = $('input[name=BOARD_NAME]').val();
+			$("#BOARD_IDX").on("click", function(e) {
 			    var test = $(this).val();
 			    var comSubmit = new ComSubmit();
 			    comSubmit.setUrl("<c:url value='/sample/studyBoardList.do' />");
-		        comSubmit.addParam("board_idx", test);
-		        comSubmit.addParam("board_name", board_name);
+		        comSubmit.addParam("BOARD_IDX", test);
+		        comSubmit.addParam("BOARD_NAME", BOARD_NAME);
 		       comSubmit.submit();
 			});
 			$("#update").on("click", function(e) {

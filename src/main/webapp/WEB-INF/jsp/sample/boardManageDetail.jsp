@@ -19,7 +19,7 @@ button {
 </head>
 <body>
 	<form id="frm" name="frm">
-	<input type="hidden" name="BOARD_IDX" value="${map.board_idx}">
+	<input type="hidden" name="BOARD_IDX" value="${map.BOARD_IDX}">
 		<table class="board_view">
 			<colgroup>
 				<col width="15%" />
@@ -31,29 +31,29 @@ button {
 			<tbody>
 				<tr>
 					<th scope="row">게시판 번호</th>
-					<td>${map.board_idx}</td> </tr>
+					<td>${map.BOARD_IDX}</td> </tr>
 					<tr>
 					<th scope="row">게시판 생성날짜</th>
-					<td>${map.board_date}</td>
+					<td>${map.BOARD_DATE}</td>
 				</tr>
 				<tr>
 				<th scope="row">게시판 이름</th>
-					<td><input type="text" id="board_name" name="BOARD_NAME"
-						value="${map.board_name}"></td>			
+					<td><input type="text" id="BOARD_NAME" name="BOARD_NAME"
+						value="${map.BOARD_NAME}"></td>			
 				</tr>	
 					<tr>
 						<th scope="row">확장필드</th>
 						<td id="table">
 							<button type="button" id="field_insert" onclick="pf_field_insert();">추가</button><br/>
 						<c:forEach var="field" items="${list}">
-						<c:if test="${field.field_del eq 'N'}">
+						<c:if test="${field.FIELD_DEL eq 'N'}">
 						<div>
-						<input type="hidden" value="${field.field_idx}" name="field_key">
-						<input type="text" value="${field.board_field}" name="field_data">
-						<input type="checkbox" ${field.field_use eq 'N' ? 'checked' : '' } onclick="pf_useCk(this)">사용안함
+						<input type="hidden" value="${field.FIELD_IDX}" name="FIELD_KEY">
+						<input type="text" value="${field.BOARD_FIELD}" name="FIELD_DATA">
+						<input type="checkbox" ${field.FIELD_USE eq 'N' ? 'checked' : '' } onclick="pf_useCk(this)">사용안함
 						<input type="checkbox" onclick="pf_delCk(this)">필드삭제
-						<input type="hidden" name="field_del" value="N">
-						<input type="hidden" name="field_use" value="${field.field_use}">
+						<input type="hidden" name="FIELD_DEL" value="N">
+						<input type="hidden" name="FIELD_USE" value="${field.FIELD_USE}">
 						</div>
 						</c:if>
 						</c:forEach>
@@ -62,7 +62,7 @@ button {
 			</tbody>
 		</table>
 	</form>
-	<button id="board_idx" style="cursor: pointer;">목록으로</button>
+	<button id="BOARD_IDX" style="cursor: pointer;">목록으로</button>
 	<button href="#this" id="update">수정하기</button>
 	<button href="#this" id="delete">삭제하기</button>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
@@ -70,8 +70,8 @@ button {
 		$(document)
 				.ready(
 						function() {
-							var board_name = $('input[name=board_name]').val();
-							$("#board_idx")
+							var BOARD_NAME = $('input[name=BOARD_NAME]').val();
+							$("#BOARD_IDX")
 									.on(
 											"click",
 											function(e) {
@@ -113,12 +113,12 @@ button {
 		}		
 		function pf_field_insert(){
 			var length = $("#table").find(".field_text").length;
-			var html = '<div class="field_div'+length+'"><input type="hidden" name="field_key"><input type="text" class="field_text" name="field_data"> <button type="button" onclick="pf_field_delete(this);">삭제</button></div>';
+			var html = '<div class="field_div'+length+'"><input type="hidden" name="FIELD_KEY"><input type="text" class="field_text" name="FIELD_DATA"> <button type="button" onclick="pf_FIELD_DELete(this);">삭제</button></div>';
 				
 			$("#table").append(html);
 		}
 		
-		function pf_field_delete(obj){
+		function pf_FIELD_DELete(obj){
 			var target = $(obj).closest('div');
 			
 			//var target = $(obj).data("target");
@@ -127,7 +127,7 @@ button {
 		}
 		
 		function pf_useCk(obj){
-			var target = $(obj).closest('div').find('input[name="field_use"]');
+			var target = $(obj).closest('div').find('input[name="FIELD_USE"]');
 			if($(obj).is(":checked")){
 				$(target).val('N');
 			}else{
@@ -136,7 +136,7 @@ button {
 		}
 		
 		function pf_delCk(obj){
-			var target = $(obj).closest('div').find('input[name="field_del"]');
+			var target = $(obj).closest('div').find('input[name="FIELD_DEL"]');
 			if($(obj).is(":checked")){
 				$(target).val('Y');
 			}else{

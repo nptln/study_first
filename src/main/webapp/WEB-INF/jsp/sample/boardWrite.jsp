@@ -28,12 +28,12 @@ margin:10px 10px 0px 0px;
 			<caption>게시글 작성</caption>
 			<tbody>
 					<c:forEach var="field_list" items="${field_list}">
-					<c:if test="${field_list.field_use eq 'Y' and field_list.field_del eq 'N'}">
+					<c:if test="${field_list.FIELD_USE eq 'Y' and field_list.FIELD_DEL eq 'N'}">
 						<tr>
-							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.board_field}</th>
+							<th scope="row" style="background-color:#d9e1e8; color:#282c37; ">${field_list.BOARD_FIELD}</th>
 								<td colspan="3">
-									<input type="text" name="field_data">
-									<input type="hidden" value="${field_list.field_idx}" name="field_key">
+									<input type="text" name="FIELD_DATA">
+									<input type="hidden" value="${field_list.FIELD_IDX}" name="FIELD_KEY">
 								</td>
 						</tr>
 				</c:if>
@@ -43,8 +43,8 @@ margin:10px 10px 0px 0px;
 					<td><input type="text" id="TITLE" name="TITLE" class="wdp_90"></input></td>
 				</tr>
 				<tr>			
-				<input type="hidden" name="board_idx" value="${map.board_idx}" >
-				<input type="hidden" name="board_name" value="${map.board_name}" >
+				<input type="hidden" name="BOARD_IDX" value="${map.BOARD_IDX}" >
+				<input type="hidden" name="BOARD_NAME" value="${map.BOARD_NAME}" >
 				</tr>
 				<tr>
 					<td colspan="2" class="view_text"><textarea rows="20"
@@ -66,8 +66,8 @@ margin:10px 10px 0px 0px;
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<script type="text/javascript">
 	var gfv_count = 1;
-	var board_idx = $('input[name=board_idx]').val();
-	var board_name = $('input[name=board_name]').val();
+	var BOARD_IDX = $('input[name=BOARD_IDX]').val();
+	var BOARD_NAME = $('input[name=BOARD_NAME]').val();
 		$(document).ready(function() {
 			$("#list").on("click", function(e) {
 				//목록으로 버튼 
@@ -95,8 +95,8 @@ margin:10px 10px 0px 0px;
 		function fn_openBoardList() {
 			var comSubmit = new ComSubmit();
 			comSubmit.setUrl("<c:url value='/sample/studyBoardList.do' />");
-			comSubmit.addParam("board_idx", board_idx);
-			comSubmit.addParam("board_name", board_name);
+			comSubmit.addParam("BOARD_IDX", BOARD_IDX);
+			comSubmit.addParam("BOARD_NAME", BOARD_NAME);
 			comSubmit.submit();
 		}
 

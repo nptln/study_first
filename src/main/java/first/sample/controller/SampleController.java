@@ -27,29 +27,29 @@ public class SampleController {
 	public ModelAndView BoardFieldUpdate(CommandMap commandMap, HttpServletRequest req) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/sample/boardManagement.do");
 		
-		String[] field_key = req.getParameterValues("field_key");
-		String[] field_data = req.getParameterValues("field_data");
-		String[] field_use = req.getParameterValues("field_use");
-		String[] field_del = req.getParameterValues("field_del");
+		String[] FIELD_KEY = req.getParameterValues("FIELD_KEY");
+		String[] FIELD_DATA = req.getParameterValues("FIELD_DATA");
+		String[] FIELD_USE = req.getParameterValues("FIELD_USE");
+		String[] FIELD_DEL = req.getParameterValues("FIELD_DEL");
 		
-		System.out.println("field_key" + Arrays.toString(field_key));
-		System.out.println("field_data" + Arrays.toString(field_data));
-		System.out.println("field_use" + Arrays.toString(field_use));
-		System.out.println("field_del" + Arrays.toString(field_del));
+		System.out.println("FIELD_KEY" + Arrays.toString(FIELD_KEY));
+		System.out.println("FIELD_DATA" + Arrays.toString(FIELD_DATA));
+		System.out.println("FIELD_USE" + Arrays.toString(FIELD_USE));
+		System.out.println("FIELD_DEL" + Arrays.toString(FIELD_DEL));
 
 		
-		if(field_key != null) {
-		for(int i = 0; i< field_key.length; i++){
+		if(FIELD_KEY != null) {
+		for(int i = 0; i< FIELD_KEY.length; i++){
 			HashMap<String,Object> map = new HashMap<String, Object>();
 			map.put("BOARD_IDX", commandMap.getMap().get("BOARD_IDX"));
-			map.put("field_data", field_data[i]);
+			map.put("FIELD_DATA", FIELD_DATA[i]);
 			
-			if(field_key[i].equals("")){
+			if(FIELD_KEY[i].equals("")){
 				sampleService.boardFieldInsert(map);
 			}else {
-				map.put("field_use", field_use[i]);
-				map.put("field_del", field_del[i]);
-				map.put("field_key", field_key[i]);
+				map.put("FIELD_USE", FIELD_USE[i]);
+				map.put("FIELD_DEL", FIELD_DEL[i]);
+				map.put("FIELD_KEY", FIELD_KEY[i]);
 				sampleService.boardFieldUpdate(map);
 			}
 		}
@@ -140,11 +140,11 @@ public class SampleController {
 	  mv.addObject("list", map.get("result")); return mv; }
 	 */
 
-	@RequestMapping(value="/sample/openBoardList.do")
+/*	@RequestMapping(value="/sample/openBoardList.do")
 	public ModelAndView openBoardList(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("/sample/boardList");
 		return mv;
-	}
+	}*/
 
 	@RequestMapping(value = "/sample/selectBoardList.do")
 	public ModelAndView selectBoardList(CommandMap commandMap) throws Exception {
@@ -188,15 +188,15 @@ public class SampleController {
 			
 		sampleService.insertBoard(commandMap.getMap(), request);
 		
-		String[] field_key = request.getParameterValues("field_key");
-		String[] field_data = request.getParameterValues("field_data");
+		String[] FIELD_KEY = request.getParameterValues("FIELD_KEY");
+		String[] FIELD_DATA = request.getParameterValues("FIELD_DATA");
 		
-		if(field_key != null) {
-			for(int i = 0; i< field_key.length; i++){
+		if(FIELD_KEY != null) {
+			for(int i = 0; i< FIELD_KEY.length; i++){
 			HashMap<String,Object> map = new HashMap<String, Object>();
-			map.put("field_data", field_data[i]);
-			map.put("field_key", field_key[i]);
-			map.put("board_idx",  commandMap.getMap().get("board_idx"));
+			map.put("FIELD_DATA", FIELD_DATA[i]);
+			map.put("FIELD_KEY", FIELD_KEY[i]);
+			map.put("BOARD_IDX",  commandMap.getMap().get("BOARD_IDX"));
 			map.put("IDX", commandMap.getMap().get("IDX"));
 			sampleService.insertField(map);
 		}
@@ -236,20 +236,20 @@ public class SampleController {
 	@RequestMapping(value = "/sample/updateBoard.do")
 	public ModelAndView updateBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		
-		String[] field_key = request.getParameterValues("field_key");
-		String[] field_data = request.getParameterValues("field_data");
+		String[] FIELD_KEY = request.getParameterValues("FIELD_KEY");
+		String[] FIELD_DATA = request.getParameterValues("FIELD_DATA");
 		
 		System.out.println(commandMap.getMap());
-		System.out.println("field_key:"+Arrays.toString(field_key)+"// field_data: "+Arrays.toString(field_data));
+		System.out.println("FIELD_KEY:"+Arrays.toString(FIELD_KEY)+"// FIELD_DATA: "+Arrays.toString(FIELD_DATA));
 		
 	
-		if(field_key != null) {
-			for(int i = 0; i< field_key.length; i++){
+		if(FIELD_KEY != null) {
+			for(int i = 0; i< FIELD_KEY.length; i++){
 			HashMap<String,Object> map = new HashMap<String, Object>();
-			map.put("field_data", field_data[i]);
-			map.put("field_key", field_key[i]);
+			map.put("FIELD_DATA", FIELD_DATA[i]);
+			map.put("FIELD_KEY", FIELD_KEY[i]);
 			map.put("IDX", commandMap.get("IDX"));
-			map.put("board_idx", commandMap.get("board_idx"));
+			map.put("BOARD_IDX", commandMap.get("BOARD_IDX"));
 			sampleService.updateField(map);
 		}
 	}

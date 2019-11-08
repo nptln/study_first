@@ -17,7 +17,7 @@ border: rgba(0,0,0,0);
 <%@ include file="/WEB-INF/include/include-header.jspf"%>
 </head>
 <body>
-	<h2 id="board_name" value="${map.board_name}"> ${map.board_name}</h2>
+	<h2 id="BOARD_NAME" value="${map.BOARD_NAME}"> ${map.BOARD_NAME}</h2>
 	 <input type="button" value="게시판 관리" style="float: right; background-color: black; color: white; margin-bottom: 20px; border-color: rgba(0,0,0,0);" onclick="fn_manageBoard();">
 	<table class="board_list">
 		<colgroup>
@@ -40,7 +40,7 @@ border: rgba(0,0,0,0);
 					<c:forEach var="row" items="${list}">
 						<tr>
 							<td>${row.IDX }</td>
-							<td class="title" style="font-weight: bold;"><a href="#this" name="title">${row.TITLE }</a>
+							<td class="title" style="font-weight: bold;"><a href="#this" name="TITLE">${row.TITLE }</a>
 								<input type="hidden" id="IDX" value="${row.IDX }">
 								</td>
 							<td>${row.HIT_CNT }</td>
@@ -57,31 +57,31 @@ border: rgba(0,0,0,0);
 									</tbody>
 							</table>
 								<br />
-									<a><button id="board_idx" style="cursor:pointer;" value="${map.board_idx}"/>글쓰기</a>
+									<a><button id="BOARD_IDX" style="cursor:pointer;" value="${map.BOARD_IDX}"/>글쓰기</a>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<script type="text/javascript">
 	$(document).ready(function(){
-		    var board_name = $('h2').text();
+		    var BOARD_NAME = $('h2').text();
 		$("button").click(function() {
 		    var test = $(this).val();
 		    var comSubmit = new ComSubmit();
 		    comSubmit.setUrl("<c:url value='/sample/openBoardWrite.do' />");
-	        comSubmit.addParam("board_idx", test);
-	        comSubmit.addParam("board_name", board_name);
+	        comSubmit.addParam("BOARD_IDX", test);
+	        comSubmit.addParam("BOARD_NAME", BOARD_NAME);
 	        comSubmit.submit();
 		});
-		$("a[name='title']").on("click", function(e){ 
+		$("a[name='TITLE']").on("click", function(e){ 
 			//제목
 			e.preventDefault(); 
-			fn_openBoardDetail($(this), board_name); 
+			fn_openBoardDetail($(this), BOARD_NAME); 
 			}); 
 		}); 
 	
-	function fn_openBoardDetail(obj, board_name){ 
+	function fn_openBoardDetail(obj, BOARD_NAME){ 
 		var comSubmit = new ComSubmit();
 		comSubmit.setUrl("<c:url value='/sample/openBoardDetail.do' />"); 
 		comSubmit.addParam("IDX", obj.parent().find("#IDX").val());
-		comSubmit.addParam("board_name", board_name);
+		comSubmit.addParam("BOARD_NAME", BOARD_NAME);
 		comSubmit.submit(); } 
 	   function fn_manageBoard() {
 	          var comSubmit = new ComSubmit();
