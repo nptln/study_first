@@ -18,10 +18,10 @@ UPDATE TB_BOARDLIST SET BOARD_FIELD_CHK='N' WHERE BOARD_IDX = #{board_idx};
 </update>
 
 <insert id="boardFieldInsert" parameterType="hashmap">
-	<![CDATA[ INSERT INTO TB_BOARDFIELD 
-	(board_idx, board_field) 
+	INSERT INTO TB_BOARDFIELD 
+	(board_idx, board_field, field_use) 
 	VALUES 
-	( #{BOARD_IDX}, #{field_data})]]>
+	( #{BOARD_IDX}, #{field_data}, 'Y')
 	</insert>
 
 <select id="boardFieldSelect" parameterType="hashmap" resultType="hashmap">
